@@ -1,242 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portfolio — 3D CG Artist & Motion Designer</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --white: #ffffff;
-      --off:   #f4f4f2;
-      --ink:   #111110;
-      --mid:   #6b6b69;
-      --rule:  #e0e0de;
-      --gold:  #b89a68;
-      --serif: 'Cormorant Garamond', serif;
-      --sans:  'Inter', sans-serif;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--sans); color: var(--ink); background: var(--white); overflow-x: hidden; }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 22px 56px;
-      background: rgba(255,255,255,0.95); backdrop-filter: blur(16px);
-      border-bottom: 1px solid transparent;
-      transition: border-color .3s, padding .3s;
-    }
-    nav.scrolled { border-color: var(--rule); padding: 14px 56px; }
-    .logo { font-family: var(--sans); font-size: .72rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); }
-    .nav-links { display: flex; gap: 40px; list-style: none; }
-    .nav-links a { font-size: .68rem; font-weight: 400; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: color .2s; }
-    .nav-links a:hover { color: var(--ink); }
-
-    /* ── HERO ── */
-    #hero { position: relative; height: 60vh; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; }
-    .hero-overlay { position: absolute; inset: 0; background: rgba(17,17,16,0.08); z-index: 1; }
-
-    /* ── COMMON ── */
-    section { padding: 96px 56px; }
-    .section-label {
-      display: flex; align-items: center; gap: 16px;
-      font-size: .6rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 40px;
-    }
-    .section-label::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--gold); }
-    h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.1; margin-bottom: 0; letter-spacing: .01em; }
-    h2 em { font-style: italic; color: var(--gold); }
-    .body-text { font-size: .85rem; line-height: 1.95; color: var(--mid); font-weight: 300; margin-bottom: 14px; }
-
-    /* ── ABOUT ── */
-    #about { background: var(--off); border-top: 1px solid var(--rule); }
-    .about-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 56px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .about-col { display: flex; flex-direction: column; }
-    .about-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
-    .about-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border: 1px solid var(--rule); font-size: .65rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; color: var(--mid); transition: border-color .2s, color .2s, background .2s; }
-    .about-link:hover { border-color: var(--ink); color: var(--ink); background: var(--white); }
-
-    /* ── SKILLS ── */
-    .skills-heading { font-size: .6rem; font-weight: 500; letter-spacing: .24em; text-transform: uppercase; color: var(--gold); margin-bottom: 28px; display: flex; align-items: center; gap: 12px; }
-    .skills-heading::after { content: ''; flex: 0 0 24px; height: 1px; background: var(--gold); }
-    .skill-group { margin-bottom: 28px; }
-    .skill-group:last-child { margin-bottom: 0; }
-    .skill-group-name { font-size: .58rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--ink); margin-bottom: 10px; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .skill-tag { padding: 5px 12px; border: 1px solid var(--rule); font-size: .7rem; font-weight: 300; color: var(--mid); background: var(--white); letter-spacing: .04em; }
-
-    /* ── DEMOREEL ── */
-    #demoreel { background: var(--ink); border-top: 1px solid #2a2a28; }
-    #demoreel .section-label { color: var(--gold); }
-    #demoreel .section-label::after { background: var(--gold); }
-    #demoreel h2 { color: var(--white); }
-    .demoreel-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 56px; border-bottom: 1px solid #2a2a28; padding-bottom: 32px; }
-    .demoreel-layout { display: grid; grid-template-columns: 1fr 2.2fr; gap: 64px; align-items: start; }
-    .demoreel-desc { font-size: .82rem; line-height: 1.9; color: #5a5a58; font-weight: 300; margin-bottom: 32px; }
-    .yt-link { display: inline-flex; align-items: center; gap: 8px; font-size: .65rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #3a3a38; text-decoration: none; transition: color .2s; }
-    .yt-link:hover { color: var(--gold); }
-    .video-wrap { position: relative; }
-    .video-wrap::before, .video-wrap::after { content: ''; position: absolute; width: 16px; height: 16px; border-color: var(--gold); border-style: solid; z-index: 2; pointer-events: none; }
-    .video-wrap::before { top: -5px; left: -5px; border-width: 1px 0 0 1px; }
-    .video-wrap::after  { bottom: -5px; right: -5px; border-width: 0 1px 1px 0; }
-    .video-ratio { position: relative; padding-bottom: 56.25%; overflow: hidden; background: #000; }
-    .video-ratio iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
-
-    /* ── CONTACT ── */
-    #contact { background: var(--white); border-top: 1px solid var(--rule); }
-    .contact-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 56px; border-bottom: 1px solid var(--rule); padding-bottom: 32px; }
-    .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-size: .58rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--mid); margin-bottom: 8px; }
-    .form-group input, .form-group textarea { width: 100%; border: 1px solid var(--rule); border-radius: 0; padding: 11px 14px; font-family: var(--sans); font-size: .82rem; font-weight: 300; outline: none; resize: none; transition: border-color .2s; background: var(--off); color: var(--ink); }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--ink); background: var(--white); }
-    .form-group textarea { height: 110px; }
-    .btn-submit { width: 100%; padding: 14px; background: var(--ink); color: #fff; font-family: var(--sans); font-size: .65rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; border: none; cursor: pointer; transition: background .2s; }
-    .btn-submit:hover { background: #2a2a28; }
-
-    /* ── FOOTER ── */
-    footer { padding: 24px 56px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; align-items: center; background: var(--off); }
-    .foot-logo { font-size: .65rem; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--mid); }
-    .foot-copy { font-size: .62rem; color: #aaa; letter-spacing: .1em; }
-
-    /* ── REVEAL ── */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .65s, transform .65s; }
-    .reveal.on { opacity: 1; transform: none; }
-    .d1 { transition-delay: .1s; }
-    .d2 { transition-delay: .2s; }
-
-    @media (max-width: 900px) {
-      nav { padding: 18px 24px; }
-      nav.scrolled { padding: 13px 24px; }
-      section { padding: 72px 24px; }
-      .about-grid, .demoreel-layout { grid-template-columns: 1fr; gap: 48px; }
-      .about-header, .demoreel-header, .contact-header { flex-direction: column; gap: 8px; }
-      footer { flex-direction: column; gap: 8px; text-align: center; }
-    }
-    @media (max-width: 560px) {
-      .nav-links { display: none; }
-    }
-  </style>
-</head>
-<body>
-
-<nav id="nav">
-  <a href="#" class="logo">Portfolio</a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#demoreel">Demoreel</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
-
-<section id="hero">
-  <video class="hero-bg" src="background.webm" autoplay loop muted playsinline></video>
-  <div class="hero-overlay"></div>
-</section>
-
-<section id="about">
-  <div class="about-header reveal">
-    <div class="section-label">Profile</div>
-    <h2>3D CG Artist &amp; <em>Motion Designer</em></h2>
-  </div>
-  <div class="about-grid">
-    <div class="about-col reveal">
-      <p class="body-text">Tokyo-based 3D CG artist and motion designer specializing in visual effects, cinematics, and brand-driven motion content.</p>
-      <p class="body-text">With experience spanning advertising, games, and film, I deliver end-to-end production — from concept and modeling through rendering and compositing.</p>
-      <p class="body-text">My approach bridges photorealistic VFX and real-time CG, always prioritizing the client's creative vision.</p>
-      <div class="about-links">
-        <a class="about-link" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener">YouTube</a>
-        <a class="about-link" href="https://www.artstation.com/tajimiryo" target="_blank" rel="noopener">ArtStation</a>
-        <a class="about-link" href="https://www.behance.net/tajimi" target="_blank" rel="noopener">Behance</a>
-        <a class="about-link" href="https://x.com/lipe02x" target="_blank" rel="noopener">X / Twitter</a>
-      </div>
-    </div>
-    <div class="about-col reveal d1">
-      <p class="skills-heading">Software &amp; Tools</p>
-      <div class="skill-group">
-        <p class="skill-group-name">3D / VFX</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Blender</span>
-          <span class="skill-tag">Cinema 4D</span>
-          <span class="skill-tag">Maya</span>
-          <span class="skill-tag">Houdini</span>
-          <span class="skill-tag">ZBrush</span>
-          <span class="skill-tag">Unreal Engine</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <p class="skill-group-name">Compositing / Edit</p>
-        <div class="skill-tags">
-          <span class="skill-tag">After Effects</span>
-          <span class="skill-tag">Premiere Pro</span>
-          <span class="skill-tag">DaVinci Resolve</span>
-          <span class="skill-tag">Nuke</span>
-        </div>
-      </div>
-      <div class="skill-group">
-        <p class="skill-group-name">Design</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Photoshop</span>
-          <span class="skill-tag">Illustrator</span>
-          <span class="skill-tag">Figma</span>
-          <span class="skill-tag">Affinity Photo</span>
-          <span class="skill-tag">Affinity Designer</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="demoreel">
-  <div class="demoreel-header reveal">
-    <div class="section-label">3D Demoreel</div>
-    <h2>Motion &amp; <em>Visual Works</em></h2>
-  </div>
-  <div class="demoreel-layout">
-    <div class="reveal">
-      <p class="demoreel-desc">Full-pipeline production from 3D modeling and simulation through rendering and compositing — covering both photorealistic VFX and real-time CG.</p>
-      <a class="yt-link" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">View all works on YouTube →</a>
-    </div>
-    <div class="video-wrap reveal d2">
-      <div class="video-ratio">
-        <iframe src="https://www.youtube.com/embed/YjGaAXRy_2k?list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw&rel=0&modestbranding=1" title="3D Demoreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="contact-header reveal">
-    <div class="section-label">Contact</div>
-    <h2>Start a <em>Project</em></h2>
-  </div>
-  <div class="reveal" style="max-width:520px;">
-    <div class="form-group"><label>Full Name</label><input type="text" placeholder="Taro Yamada" /></div>
-    <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com" /></div>
-    <div class="form-group"><label>Message</label><textarea placeholder="Tell me about your project..."></textarea></div>
-    <button class="btn-submit">Send Enquiry</button>
-  </div>
-</section>
-
-<footer>
-  <div class="foot-logo">Portfolio</div>
-  <div class="foot-copy">© 2024 All Rights Reserved</div>
-</footer>
-
-<script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-</script>
-</body>
-</html>
+<html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -252,233 +15,304 @@
       --sans: 'DM Sans', sans-serif;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: var(--sans); color: var(--ink); background: var(--white); overflow-x: hidden; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: var(--sans); background: var(--ink); }
 
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 24px 48px;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
-      border-bottom: 1px solid transparent; transition: border-color .3s, padding .3s;
+    /* ── BACKGROUND VIDEO ── */
+    #bg-video {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; z-index: 0;
     }
-    nav.scrolled { border-color: #eee; padding: 16px 48px; }
-    .logo { font-family: var(--serif); font-size: 1.2rem; text-decoration: none; color: var(--ink); letter-spacing: .06em; }
+    #bg-overlay {
+      position: fixed; inset: 0;
+      background: rgba(20,19,17,0.52);
+      z-index: 1;
+    }
+
+    /* ── PAGES ── */
+    .page {
+      position: fixed; inset: 0; z-index: 10;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transition: opacity .5s ease;
+    }
+    .page.active { opacity: 1; pointer-events: all; }
+
+    /* ── TOP PAGE ── */
+    #page-top {
+      z-index: 2;
+      justify-content: space-between;
+    }
+    #page-top.active { opacity: 1; pointer-events: all; }
+
+    .top-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 28px 56px;
+    }
+    .logo { font-family: var(--serif); font-size: 1.2rem; text-decoration: none; color: #fff; letter-spacing: .08em; }
     .logo span { color: var(--gold); }
-    .nav-links { display: flex; gap: 36px; list-style: none; }
-    .nav-links a { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; text-decoration: none; color: #666; transition: color .2s; }
-    .nav-links a:hover { color: var(--ink); }
 
-    /* HERO */
-    #hero { position: relative; height: 60vh; overflow: hidden; }
-    .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; }
-    .hero-overlay { position: absolute; inset: 0; background: rgba(246,245,242,0.15); z-index: 1; }
-    h1 { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.8rem); line-height: 1.1; margin-bottom: 20px; }
-    h1 em { font-style: italic; color: var(--gold); }
-    .hero-sub { font-size: .9rem; line-height: 1.8; color: #666; max-width: 400px; font-weight: 300; margin-bottom: 40px; }
-    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 28px; background: var(--ink); color: var(--white); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; transition: opacity .2s; }
-    .btn:hover { opacity: .8; }
+    .top-main {
+      flex: 1;
+      display: flex; align-items: flex-end;
+      padding: 0 56px 72px;
+    }
+    .top-links {
+      display: flex; gap: 2px;
+    }
+    .top-link {
+      display: flex; flex-direction: column; justify-content: space-between;
+      width: 220px; height: 120px;
+      padding: 22px 24px;
+      border: 1px solid rgba(255,255,255,0.18);
+      text-decoration: none;
+      cursor: pointer;
+      background: rgba(20,19,17,0.3);
+      backdrop-filter: blur(6px);
+      transition: background .3s, border-color .3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .top-link::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width .35s ease;
+    }
+    .top-link:hover { background: rgba(20,19,17,0.55); border-color: rgba(255,255,255,0.32); }
+    .top-link:hover::after { width: 100%; }
+    .top-link-num { font-size: .58rem; letter-spacing: .2em; color: var(--gold); }
+    .top-link-bottom { display: flex; justify-content: space-between; align-items: flex-end; }
+    .top-link-name { font-family: var(--serif); font-size: 1.5rem; font-weight: 300; color: #fff; line-height: 1; }
+    .top-link-arr { font-size: .75rem; color: rgba(255,255,255,0.35); }
 
-    /* COMMON */
-    section { padding: 100px 48px; }
-    .label { font-size: .65rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
-    h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 48px; }
-    h2 em { font-style: italic; color: #b8a99a; }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .body-text { font-size: .9rem; line-height: 1.9; color: #666; font-weight: 300; margin-bottom: 16px; }
+    .top-footer {
+      padding: 18px 56px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex; justify-content: space-between;
+    }
+    .top-footer span { font-size: .58rem; letter-spacing: .12em; color: rgba(255,255,255,0.2); }
+
+    /* ── INNER PAGES ── */
+    .inner-page {
+      background: rgba(20,19,17,0.88);
+      backdrop-filter: blur(24px);
+    }
+    .inner-nav {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 56px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .back-btn {
+      display: flex; align-items: center; gap: 10px;
+      font-size: .65rem; letter-spacing: .16em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); cursor: pointer; border: none; background: none;
+      font-family: var(--sans); transition: color .2s;
+    }
+    .back-btn:hover { color: #fff; }
+    .back-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.5; }
+    .inner-label { font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
+
+    .inner-body {
+      flex: 1; padding: 52px 56px;
+      overflow: hidden;
+    }
+    .section-title { font-family: var(--serif); font-weight: 300; font-size: clamp(2.4rem, 4vw, 4rem); line-height: 1.05; color: #fff; margin-bottom: 40px; }
+    .section-title em { font-style: italic; color: var(--gold); }
 
     /* ABOUT */
-    #about { background: var(--off); }
-    .about-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
-    .about-link { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border: 1px solid #ddd; font-size: .73rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: #555; transition: border-color .2s, color .2s; }
-    .about-link:hover { border-color: var(--gold); color: var(--ink); }
-    .skills-label { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: #999; margin: 40px 0 20px; }
-    .skill-group { margin-bottom: 24px; }
-    .skill-group-name { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .skill-tag { padding: 6px 14px; border: 1px solid #ddd; font-size: .75rem; color: #555; background: #fff; }
-
-    /* WORKS */
-    #works { background: var(--white); }
-    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
-    .card { position: relative; aspect-ratio: 3/4; overflow: hidden; cursor: pointer; }
-    .card:first-child { grid-column: span 2; aspect-ratio: auto; min-height: 400px; }
-    .card-bg { position: absolute; inset: 0; transition: transform .6s ease; }
-    .card:hover .card-bg { transform: scale(1.04); }
-    .bg1 { background: linear-gradient(145deg, #ddd8cf, #c8c0b4); }
-    .bg2 { background: linear-gradient(145deg, #e8e3db, #d4cec5); }
-    .bg3 { background: linear-gradient(145deg, #d0cac0, #bfb8ac); }
-    .bg4 { background: linear-gradient(145deg, #e0ddd7, #ccc6bc); }
-    .card-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 24px; background: linear-gradient(transparent, rgba(20,20,18,.8)); transform: translateY(6px); transition: transform .3s; }
-    .card:hover .card-info { transform: translateY(0); }
-    .card-cat { font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-    .card-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; color: #fff; line-height: 1.2; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .body-text { font-size: .82rem; line-height: 1.9; color: rgba(255,255,255,0.48); font-weight: 300; margin-bottom: 12px; }
+    .about-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .about-link { display: inline-flex; align-items: center; padding: 8px 16px; border: 1px solid rgba(255,255,255,0.18); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,0.45); transition: border-color .2s, color .2s; }
+    .about-link:hover { border-color: var(--gold); color: #fff; }
+    .skill-group { margin-bottom: 20px; }
+    .skill-group-name { font-size: .58rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 9px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-tag { padding: 5px 12px; border: 1px solid rgba(255,255,255,0.13); font-size: .7rem; color: rgba(255,255,255,0.42); }
+    .skills-section-label { font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 20px; }
 
     /* DEMOREEL */
-    #demoreel { background: var(--ink); }
-    #demoreel .label { color: var(--gold); }
-    #demoreel h2 { color: #fff; }
-    .demoreel-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start; }
-    .demoreel-desc { font-size: .88rem; line-height: 1.85; color: #6a6560; font-weight: 300; margin-bottom: 32px; }
-    .yt-link { display: inline-flex; align-items: center; gap: 8px; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: #5a5450; text-decoration: none; transition: color .2s; }
-    .yt-link:hover { color: var(--gold); }
+    .demoreel-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 56px; align-items: start; }
     .video-wrap { position: relative; }
-    .video-wrap::before, .video-wrap::after { content: ''; position: absolute; width: 18px; height: 18px; border-color: var(--gold); border-style: solid; z-index: 2; pointer-events: none; }
-    .video-wrap::before { top: -6px; left: -6px; border-width: 2px 0 0 2px; }
-    .video-wrap::after  { bottom: -6px; right: -6px; border-width: 0 2px 2px 0; }
+    .video-wrap::before, .video-wrap::after { content: ''; position: absolute; width: 16px; height: 16px; border-color: var(--gold); border-style: solid; z-index: 2; pointer-events: none; }
+    .video-wrap::before { top: -5px; left: -5px; border-width: 1px 0 0 1px; }
+    .video-wrap::after  { bottom: -5px; right: -5px; border-width: 0 1px 1px 0; }
     .video-ratio { position: relative; padding-bottom: 56.25%; overflow: hidden; background: #000; }
     .video-ratio iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    .demoreel-desc { font-size: .82rem; line-height: 1.9; color: rgba(255,255,255,0.45); font-weight: 300; margin-bottom: 28px; }
+    .yt-link { display: inline-flex; align-items: center; gap: 8px; font-size: .65rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,0.28); text-decoration: none; transition: color .2s; }
+    .yt-link:hover { color: var(--gold); }
 
     /* CONTACT */
-    #contact { background: var(--off); }
-    .contact-desc { font-size: .88rem; line-height: 1.8; color: #666; font-weight: 300; margin-bottom: 40px; }
-    .link-list { display: flex; flex-direction: column; gap: 12px; }
-    .c-link { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border: 1px solid #ddd; text-decoration: none; color: var(--ink); font-size: .85rem; transition: border-color .2s, background .2s; }
-    .c-link:hover { border-color: var(--gold); background: #fff; }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-size: .65rem; letter-spacing: .16em; text-transform: uppercase; color: #999; margin-bottom: 8px; }
-    .form-group input, .form-group textarea { width: 100%; border: 1px solid #ddd; padding: 12px 16px; font-family: var(--sans); font-size: .88rem; outline: none; resize: none; transition: border-color .2s; background: #fff; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
-    .form-group textarea { height: 110px; }
-    .btn-submit { width: 100%; padding: 14px; background: var(--ink); color: #fff; font-family: var(--sans); font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; border: none; cursor: pointer; transition: opacity .2s; }
-    .btn-submit:hover { opacity: .8; }
-
-    /* FOOTER */
-    footer { padding: 28px 48px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-    .foot-logo { font-family: var(--serif); font-size: 1rem; color: #aaa; }
-    .foot-logo span { color: var(--gold); }
-    .foot-copy { font-size: .7rem; color: #bbb; letter-spacing: .08em; }
-
-    /* REVEAL */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
-    .reveal.on { opacity: 1; transform: none; }
-    .d1 { transition-delay: .1s; }
-    .d2 { transition-delay: .2s; }
-
-    @media (max-width: 900px) {
-      nav { padding: 18px 24px; }
-      nav.scrolled { padding: 14px 24px; }
-      section { padding: 72px 24px; }
-      #hero { padding: 100px 24px 64px; }
-      .grid { grid-template-columns: 1fr 1fr; }
-      .card:first-child { grid-column: span 2; }
-      .two-col, .demoreel-layout { grid-template-columns: 1fr; gap: 40px; }
-      footer { flex-direction: column; gap: 10px; text-align: center; }
+    .contact-inner { max-width: 520px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: .57rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 7px; }
+    .form-group input, .form-group textarea {
+      width: 100%; border: 1px solid rgba(255,255,255,0.14);
+      padding: 10px 14px; font-family: var(--sans); font-size: .82rem;
+      outline: none; resize: none;
+      background: rgba(255,255,255,0.05); color: #fff;
+      transition: border-color .2s;
     }
-    @media (max-width: 560px) {
-      .nav-links { display: none; }
-      .grid { grid-template-columns: 1fr; }
-      .card:first-child { grid-column: span 1; }
+    .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255,255,255,0.18); }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { height: 100px; }
+    .btn-submit { width: 100%; padding: 13px; background: var(--gold); color: var(--ink); font-family: var(--sans); font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; border: none; cursor: pointer; transition: opacity .2s; margin-top: 6px; font-weight: 400; }
+    .btn-submit:hover { opacity: .85; }
+
+    @media (max-width: 768px) {
+      .top-nav, .top-main, .top-footer, .inner-nav, .inner-body { padding-left: 28px; padding-right: 28px; }
+      .top-links { flex-direction: column; gap: 2px; }
+      .top-link { width: 100%; height: 90px; }
+      .about-grid, .demoreel-grid { grid-template-columns: 1fr; gap: 36px; }
     }
   </style>
 </head>
 <body>
 
-<nav id="nav">
-  <a href="#" class="logo">PORTFOLIO<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#demoreel">3D Demoreel</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+<video id="bg-video" src="background.webm" autoplay loop muted playsinline></video>
+<div id="bg-overlay"></div>
 
-<section id="hero">
-  <video class="hero-bg" src="background.webm" autoplay loop muted playsinline></video>
-  <div class="hero-overlay"></div>
-</section>
-
-<section id="about">
-  <p class="label reveal">About</p>
-  <h2 class="reveal">自己<em>紹介</em></h2>
-  <div class="two-col">
-    <div class="reveal">
-      <p class="body-text">はじめまして。東京を拠点に活動する3DCGアーティスト・モーションデザイナーです。</p>
-      <p class="body-text">映像制作・ビジュアルエフェクト・ブランディングを専門とし、広告・ゲーム・映画など幅広い分野でのプロジェクトに携わってきました。</p>
-      <p class="body-text">リアルタイムCGからフォトリアルなVFXまで、クライアントのビジョンを形にすることを大切にしています。</p>
-      <div class="about-links">
-        <a class="about-link" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener">YouTube →</a>
-        <a class="about-link" href="https://www.artstation.com/tajimiryo" target="_blank" rel="noopener">ArtStation →</a>
-        <a class="about-link" href="https://www.behance.net/tajimi" target="_blank" rel="noopener">Behance →</a>
-        <a class="about-link" href="https://x.com/lipe02x" target="_blank" rel="noopener">X →</a>
-      </div>
-    </div>
-    <div class="reveal d1">
-      <p class="skills-label">使用ソフトウェア</p>
-      <div class="skill-group">
-        <p class="skill-group-name">3D / VFX</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Blender</span>
-          <span class="skill-tag">Cinema 4D</span>
-          <span class="skill-tag">Maya</span>
-          <span class="skill-tag">Houdini</span>
-          <span class="skill-tag">ZBrush</span>
-          <span class="skill-tag">Unreal Engine</span>
+<!-- TOP -->
+<div class="page active" id="page-top">
+  <nav class="top-nav">
+    <a href="#" class="logo">PORTFOLIO<span>.</span></a>
+  </nav>
+  <div class="top-main">
+    <div class="top-links">
+      <div class="top-link" onclick="openPage('about')">
+        <span class="top-link-num">01</span>
+        <div class="top-link-bottom">
+          <span class="top-link-name">About</span>
+          <span class="top-link-arr">→</span>
         </div>
       </div>
-      <div class="skill-group">
-        <p class="skill-group-name">映像 / 編集</p>
-        <div class="skill-tags">
-          <span class="skill-tag">After Effects</span>
-          <span class="skill-tag">Premiere Pro</span>
-          <span class="skill-tag">DaVinci Resolve</span>
-          <span class="skill-tag">Nuke</span>
+      <div class="top-link" onclick="openPage('demoreel')">
+        <span class="top-link-num">02</span>
+        <div class="top-link-bottom">
+          <span class="top-link-name">Demoreel</span>
+          <span class="top-link-arr">→</span>
         </div>
       </div>
-      <div class="skill-group">
-        <p class="skill-group-name">デザイン</p>
-        <div class="skill-tags">
-          <span class="skill-tag">Photoshop</span>
-          <span class="skill-tag">Illustrator</span>
-          <span class="skill-tag">Figma</span>
-          <span class="skill-tag">Affinity Photo</span>
-          <span class="skill-tag">Affinity Designer</span>
+      <div class="top-link" onclick="openPage('contact')">
+        <span class="top-link-num">03</span>
+        <div class="top-link-bottom">
+          <span class="top-link-name">Contact</span>
+          <span class="top-link-arr">→</span>
         </div>
       </div>
     </div>
   </div>
-</section>
+  <div class="top-footer">
+    <span>Tokyo, Japan</span>
+    <span>© 2024 All Rights Reserved</span>
+  </div>
+</div>
 
-<section id="demoreel">
-  <p class="label reveal">3D Demoreel</p>
-  <h2 class="reveal">3D <em>映像作品</em></h2>
-  <div class="demoreel-layout">
-    <div class="reveal">
-      <p class="demoreel-desc">3Dモデリングからレンダリング、コンポジットまで一貫して制作。リアルタイムCGからフォトリアルなVFXまで幅広く対応しています。</p>
-      <a class="yt-link" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">YouTubeで全作品を見る →</a>
-    </div>
-    <div class="video-wrap reveal d2">
-      <div class="video-ratio">
-        <iframe src="https://www.youtube.com/embed/YjGaAXRy_2k?list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw&rel=0&modestbranding=1" title="3D Demoreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<!-- ABOUT -->
+<div class="page inner-page" id="page-about">
+  <div class="inner-nav">
+    <button class="back-btn" onclick="closePage()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+    <span class="inner-label">01 — About</span>
+  </div>
+  <div class="inner-body">
+    <h2 class="section-title">自己<em>紹介</em></h2>
+    <div class="about-grid">
+      <div>
+        <p class="body-text">はじめまして。東京を拠点に活動する3DCGアーティスト・モーションデザイナーです。</p>
+        <p class="body-text">映像制作・ビジュアルエフェクト・ブランディングを専門とし、広告・ゲーム・映画など幅広い分野でのプロジェクトに携わってきました。</p>
+        <p class="body-text">リアルタイムCGからフォトリアルなVFXまで、クライアントのビジョンを形にすることを大切にしています。</p>
+        <div class="about-links">
+          <a class="about-link" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener">YouTube →</a>
+          <a class="about-link" href="https://www.artstation.com/tajimiryo" target="_blank" rel="noopener">ArtStation →</a>
+          <a class="about-link" href="https://www.behance.net/tajimi" target="_blank" rel="noopener">Behance →</a>
+          <a class="about-link" href="https://x.com/lipe02x" target="_blank" rel="noopener">X →</a>
+        </div>
+      </div>
+      <div>
+        <p class="skills-section-label">使用ソフトウェア</p>
+        <div class="skill-group">
+          <p class="skill-group-name">3D / VFX</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Blender</span><span class="skill-tag">Cinema 4D</span><span class="skill-tag">Maya</span><span class="skill-tag">Houdini</span><span class="skill-tag">ZBrush</span><span class="skill-tag">Unreal Engine</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-name">映像 / 編集</p>
+          <div class="skill-tags">
+            <span class="skill-tag">After Effects</span><span class="skill-tag">Premiere Pro</span><span class="skill-tag">DaVinci Resolve</span><span class="skill-tag">Nuke</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <p class="skill-group-name">デザイン</p>
+          <div class="skill-tags">
+            <span class="skill-tag">Photoshop</span><span class="skill-tag">Illustrator</span><span class="skill-tag">Figma</span><span class="skill-tag">Affinity Photo</span><span class="skill-tag">Affinity Designer</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<section id="contact">
-  <p class="label reveal">Contact</p>
-  <h2 class="reveal">お問い合わせ</h2>
-  <div class="reveal" style="max-width:560px;">
-    <div class="form-group"><label>お名前</label><input type="text" placeholder="山田 太郎" /></div>
-    <div class="form-group"><label>メール</label><input type="email" placeholder="your@email.com" /></div>
-    <div class="form-group"><label>メッセージ</label><textarea placeholder="お仕事の内容をお聞かせください..."></textarea></div>
-    <button class="btn-submit">送信する</button>
+<!-- DEMOREEL -->
+<div class="page inner-page" id="page-demoreel">
+  <div class="inner-nav">
+    <button class="back-btn" onclick="closePage()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+    <span class="inner-label">02 — Demoreel</span>
   </div>
-</section>
+  <div class="inner-body">
+    <h2 class="section-title">3D <em>映像作品</em></h2>
+    <div class="demoreel-grid">
+      <div class="video-wrap">
+        <div class="video-ratio">
+          <iframe src="https://www.youtube.com/embed/YjGaAXRy_2k?list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw&rel=0&modestbranding=1" title="3D Demoreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div>
+        <p class="demoreel-desc">3Dモデリングからレンダリング、コンポジットまで一貫して制作。リアルタイムCGからフォトリアルなVFXまで幅広く対応しています。</p>
+        <a class="yt-link" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">YouTubeで全作品を見る →</a>
+      </div>
+    </div>
+  </div>
+</div>
 
-<footer>
-  <div class="foot-logo">PORTFOLIO<span>.</span></div>
-  <div class="foot-copy">© 2024 All Rights Reserved</div>
-</footer>
+<!-- CONTACT -->
+<div class="page inner-page" id="page-contact">
+  <div class="inner-nav">
+    <button class="back-btn" onclick="closePage()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+    <span class="inner-label">03 — Contact</span>
+  </div>
+  <div class="inner-body">
+    <h2 class="section-title">お問い<em>合わせ</em></h2>
+    <div class="contact-inner">
+      <div class="form-group"><label>お名前</label><input type="text" placeholder="山田 太郎" /></div>
+      <div class="form-group"><label>メール</label><input type="email" placeholder="your@email.com" /></div>
+      <div class="form-group"><label>メッセージ</label><textarea placeholder="お仕事の内容をお聞かせください..."></textarea></div>
+      <button class="btn-submit">送信する</button>
+    </div>
+  </div>
+</div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
-  }, { threshold: 0.15 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+<script>
+  function openPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+  }
+  function closePage() {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-top').classList.add('active');
+  }
 </script>
 </body>
 </html>

@@ -34,10 +34,9 @@
     .nav-links a:hover { color: var(--ink); }
 
     /* HERO */
-    #hero { position: relative; min-height: 100vh; display: flex; align-items: flex-end; padding: 120px 48px 80px; background: var(--off); overflow: hidden; }
+    #hero { position: relative; height: 60vh; overflow: hidden; }
     .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; z-index: 0; }
-    .hero-overlay { position: absolute; inset: 0; background: rgba(246,245,242,0.55); z-index: 1; }
-    .hero-inner { position: relative; z-index: 2; max-width: 700px; }
+    .hero-overlay { position: absolute; inset: 0; background: rgba(246,245,242,0.15); z-index: 1; }
     h1 { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.8rem); line-height: 1.1; margin-bottom: 20px; }
     h1 em { font-style: italic; color: var(--gold); }
     .hero-sub { font-size: .9rem; line-height: 1.8; color: #666; max-width: 400px; font-weight: 300; margin-bottom: 40px; }
@@ -151,11 +150,6 @@
 <section id="hero">
   <video class="hero-bg" src="background.webm" autoplay loop muted playsinline></video>
   <div class="hero-overlay"></div>
-  <div class="hero-inner">
-    <h1>Design that<br/><em>speaks</em> with<br/>purpose.</h1>
-    <p class="hero-sub">ビジョンを形にするクリエイティブワーク。ブランド、デザイン、そしてデジタル体験を届けます。</p>
-    <a href="#demoreel" class="btn">作品を見る →</a>
-  </div>
 </section>
 
 <section id="about">

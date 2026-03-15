@@ -112,6 +112,15 @@
     .foot-logo span { color: var(--gold); }
     .foot-copy { font-size: .7rem; color: #bbb; letter-spacing: .08em; }
 
+    /* MARQUEE */
+    .marquee-wrap { overflow: hidden; margin-top: 48px; padding: 14px 0; border-top: 1px solid #ddd; border-bottom: 1px solid #ddd; }
+    .marquee-track { display: flex; gap: 48px; width: max-content; animation: marquee 22s linear infinite; }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item { font-family: var(--serif); font-size: clamp(1rem, 2vw, 1.3rem); font-weight: 300; white-space: nowrap; color: #aaa; letter-spacing: .05em; display: flex; align-items: center; gap: 48px; }
+    .marquee-item em { font-style: italic; color: var(--gold); }
+    .marquee-sep { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
     .reveal.on { opacity: 1; transform: none; }
@@ -150,6 +159,12 @@
 <section id="hero">
   <div class="hero-inner">
     <h1>Design that<br/><em>speaks</em> with<br/>purpose.</h1>
+    <div class="marquee-wrap">
+      <div class="marquee-track" id="marqueeTrack">
+        <span class="marquee-item">Brand Identity <span class="marquee-sep"></span> Motion Design <span class="marquee-sep"></span> <em>3D Visualization</em> <span class="marquee-sep"></span> Visual Effects <span class="marquee-sep"></span> Web Design <span class="marquee-sep"></span> <em>Art Direction</em> <span class="marquee-sep"></span> Compositing <span class="marquee-sep"></span> UI / UX <span class="marquee-sep"></span></span>
+        <span class="marquee-item">Brand Identity <span class="marquee-sep"></span> Motion Design <span class="marquee-sep"></span> <em>3D Visualization</em> <span class="marquee-sep"></span> Visual Effects <span class="marquee-sep"></span> Web Design <span class="marquee-sep"></span> <em>Art Direction</em> <span class="marquee-sep"></span> Compositing <span class="marquee-sep"></span> UI / UX <span class="marquee-sep"></span></span>
+      </div>
+    </div>
     <p class="hero-sub">ビジョンを形にするクリエイティブワーク。ブランド、デザイン、そしてデジタル体験を届けます。</p>
     <a href="#works" class="btn">作品を見る →</a>
   </div>
@@ -207,8 +222,6 @@
 </section>
 
 <section id="works">
-  <p class="label reveal">Selected Works</p>
-  <h2 class="reveal">厳選した<br/><em>作品集</em></h2>
   <div class="grid">
     <div class="card reveal"><div class="card-bg bg1"></div><div class="card-info"><div class="card-cat">Brand Identity</div><div class="card-name">Maison Blanche</div></div></div>
     <div class="card reveal d1"><div class="card-bg bg2"></div><div class="card-info"><div class="card-cat">Web Design</div><div class="card-name">Archi Studio</div></div></div>
@@ -240,7 +253,7 @@
     <div class="reveal">
       <p class="contact-desc">新しいプロジェクトのご相談、コラボレーションのご提案など、お気軽にご連絡ください。</p>
       <div class="link-list">
-        <a class="c-link" href="mailto:hello@portfolio.com">hello@portfolio.com <span>→</span></a>
+        <a class="c-link" href="/cdn-cgi/l/email-protection#751d1019191a35051a0701131a191c1a5b161a18"><span class="__cf_email__" data-cfemail="e9818c858586a999869b9d8f86858086c78a8684">[email&#160;protected]</span> <span>→</span></a>
         <a class="c-link" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener">YouTube <span>→</span></a>
         <a class="c-link" href="https://www.artstation.com/tajimiryo" target="_blank" rel="noopener">ArtStation <span>→</span></a>
         <a class="c-link" href="https://www.behance.net/tajimi" target="_blank" rel="noopener">Behance <span>→</span></a>
@@ -260,10 +273,12 @@
   <div class="foot-copy">© 2024 All Rights Reserved</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
-  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add('on'), io.unobserve(e.target))), { threshold: 0.1 });
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
 </body>

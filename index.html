@@ -3,342 +3,404 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portfolio — 3D CG Artist</title>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <title>Portfolio — 3D CG Artist & Motion Designer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@100;300;400;600;700&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --ink:  #080807;
-      --gold: #c8a45e;
-      --gold2:#e8c47a;
-      --fog:  rgba(255,255,255,0.06);
-      --dim:  rgba(255,255,255,0.38);
-      --rule: rgba(255,255,255,0.08);
-      --display: 'Barlow Condensed', sans-serif;
-      --body:    'Syne', sans-serif;
-      --mono:    'DM Mono', monospace;
+      --black:  #050504;
+      --bar:    rgba(4,4,3,0.96);
+      --ember:  #c8935a;
+      --ice:    #8cb4c8;
+      --white:  #f0ede8;
+      --dim:    rgba(240,237,232,0.55);
+      --faint:  rgba(240,237,232,0.22);
+      --rule:   rgba(240,237,232,0.1);
+      --display: 'Antonio', sans-serif;
+      --body:    'Spectral', serif;
+      --mono:    'Inconsolata', monospace;
     }
-    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
-    html, body { width:100%; height:100%; overflow:hidden; background:var(--ink); color:#fff; font-family:var(--body); cursor:default; }
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html, body { width:100%; height:100%; overflow:hidden; background:var(--black); color:var(--white); font-family:var(--body); }
 
-    /* ─── GRAIN overlay ─── */
+    /* ── GRAIN ── */
+    body::before {
+      content:''; pointer-events:none; position:fixed; inset:0; z-index:998;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity:.032; mix-blend-mode:overlay;
+    }
+
+    /* ── SCANLINES (subtle film effect) ── */
     body::after {
-      content:''; pointer-events:none;
-      position:fixed; inset:0; z-index:999;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity:.028;
+      content:''; pointer-events:none; position:fixed; inset:0; z-index:997;
+      background: repeating-linear-gradient(0deg, transparent 0px, transparent 3px, rgba(0,0,0,.04) 3px, rgba(0,0,0,.04) 4px);
     }
 
-    /* ─── VIDEO BG ─── */
+    /* ── VIDEO ── */
     #bg-video { position:fixed; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
-    #bg-overlay {
-      position:fixed; inset:0; z-index:1;
-      background: linear-gradient(to bottom,
-        rgba(8,8,7,.82) 0%,
-        rgba(8,8,7,.50) 40%,
-        rgba(8,8,7,.70) 100%);
+
+    /* cinematic vignette */
+    #vignette {
+      position:fixed; inset:0; z-index:1; pointer-events:none;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, rgba(4,4,3,.7) 100%),
+        linear-gradient(to bottom, rgba(4,4,3,.3) 0%, transparent 20%, transparent 80%, rgba(4,4,3,.3) 100%);
     }
 
-    /* ─── SHELL ─── */
-    #shell { position:relative; z-index:2; width:100%; height:100vh; display:grid; grid-template-rows:auto 1fr; }
-
-    /* ─── HEADER ─── */
-    header {
-      display:flex; align-items:center; justify-content:space-between;
-      padding:0 56px;
-      height:68px;
-      background:rgba(8,8,7,.72);
-      backdrop-filter:blur(20px);
-      -webkit-backdrop-filter:blur(20px);
-      border-bottom:1px solid var(--rule);
-      flex-shrink:0;
-      position:relative;
-      z-index:10;
+    /* ── LETTERBOX BARS ── */
+    #bar-top, #bar-bottom {
+      position:fixed; left:0; right:0; z-index:20;
+      background:var(--bar);
+      backdrop-filter:blur(0px);
     }
+    #bar-top { top:0; border-bottom:1px solid var(--rule); }
+    #bar-bottom { bottom:0; border-top:1px solid var(--rule); }
+
+    /* ── TOP BAR ── */
+    #bar-top { height:56px; display:flex; align-items:center; justify-content:space-between; padding:0 48px; }
+
     .logo {
-      font-family:var(--display); font-size:1.05rem; font-weight:900;
-      letter-spacing:.32em; text-decoration:none; color:#fff; text-transform:uppercase;
-      flex-shrink:0;
+      font-family:var(--display); font-size:.9rem; font-weight:700;
+      letter-spacing:.38em; text-decoration:none; color:var(--white);
+      text-transform:uppercase; flex-shrink:0; cursor:pointer;
     }
-    .logo em { color:var(--gold); font-style:normal; }
+    .logo span { color:var(--ember); }
 
-    /* NAV — right-aligned links, corporate style */
-    .tabs {
-      display:flex; align-items:center; gap:0;
-    }
-    .tab {
-      display:flex; align-items:center; gap:8px;
-      padding:0 28px;
-      height:68px;
-      border:none; background:transparent;
+    /* NAV LINKS — film chapter style */
+    .topnav { display:flex; align-items:stretch; height:56px; }
+    .topnav-link {
+      display:flex; align-items:center; gap:10px;
+      padding:0 32px; height:100%;
+      font-family:var(--display); font-size:.72rem; font-weight:400;
+      letter-spacing:.26em; text-transform:uppercase;
+      color:var(--faint); background:none; border:none;
       cursor:pointer; position:relative;
-      color:#fff; font-family:var(--body);
-      transition:background .2s;
+      transition:color .25s, background .25s;
       border-left:1px solid var(--rule);
     }
-    .tab:first-child { border-left:1px solid var(--rule); }
-    .tab:hover { background:rgba(255,255,255,.04); }
-    .tab.active { background:rgba(200,164,94,.07); }
-    /* active bottom bar */
-    .tab::after {
+    .topnav-link:hover { color:var(--white); background:rgba(200,147,90,.05); }
+    .topnav-link.active { color:var(--ember); background:rgba(200,147,90,.07); }
+    /* bottom accent line */
+    .topnav-link::after {
       content:''; position:absolute; bottom:0; left:0; right:0;
-      height:2px; background:var(--gold);
-      transform:scaleX(0); transform-origin:center;
-      transition:transform .3s cubic-bezier(.16,1,.3,1);
+      height:1px; background:var(--ember);
+      transform:scaleX(0); transform-origin:left;
+      transition:transform .4s cubic-bezier(.16,1,.3,1);
     }
-    .tab:hover::after, .tab.active::after { transform:scaleX(1); }
-    .tab-num {
-      font-family:var(--mono); font-size:.44rem; letter-spacing:.16em;
-      color:var(--gold); opacity:.5; margin-top:1px;
-    }
-    .tab-name {
-      font-family:var(--display); font-size:1rem; font-weight:700;
-      letter-spacing:.18em; text-transform:uppercase; line-height:1;
-      transition:color .2s;
-      color:rgba(255,255,255,.7);
-    }
-    .tab:hover .tab-name { color:#fff; }
-    .tab.active .tab-name { color:var(--gold); }
+    .topnav-link:hover::after, .topnav-link.active::after { transform:scaleX(1); }
+    .topnav-num { font-size:.5rem; color:var(--ember); opacity:.5; letter-spacing:.1em; margin-top:1px; }
 
-    /* HEADER RIGHT */
-    .header-right { display:flex; align-items:center; gap:12px; padding-left:32px; border-left:1px solid var(--rule); height:68px; }
-    .header-loc { font-family:var(--mono); font-size:.46rem; letter-spacing:.18em; color:rgba(255,255,255,.22); text-transform:uppercase; }
-    .header-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); opacity:.6; animation:pulse 2.4s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{opacity:.6;transform:scale(1);} 50%{opacity:1;transform:scale(1.5);} }
+    .bar-right { display:flex; align-items:center; gap:16px; padding-left:32px; border-left:1px solid var(--rule); height:56px; }
+    .bar-loc { font-family:var(--mono); font-size:.46rem; letter-spacing:.2em; color:var(--faint); text-transform:uppercase; }
+    .live-dot { width:5px; height:5px; border-radius:50%; background:var(--ember); animation:blink 2.8s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:.5} 50%{opacity:1; box-shadow:0 0 6px var(--ember)} }
 
-    /* ─── CONTENT AREA ─── */
-    #content { position:relative; overflow:hidden; }
+    /* ── BOTTOM BAR ── */
+    #bar-bottom { height:40px; display:flex; align-items:center; justify-content:space-between; padding:0 48px; }
+    .bar-copy { font-family:var(--mono); font-size:.44rem; letter-spacing:.18em; color:var(--faint); text-transform:uppercase; }
+    .bar-status { font-family:var(--mono); font-size:.44rem; letter-spacing:.16em; color:rgba(240,237,232,.18); }
 
-    /* PANELS */
-    .panel { position:absolute; inset:0; opacity:0; pointer-events:none; transition:opacity .5s ease, transform .5s cubic-bezier(.16,1,.3,1); transform:translateY(18px); padding:52px 56px 48px; display:flex; flex-direction:column; }
-    .panel.active { opacity:1; pointer-events:all; transform:translateY(0); }
-
-    /* HOME PANEL */
-    #panel-home { justify-content:flex-end; padding-bottom:72px; }
-    .hero-eyebrow { font-family:var(--mono); font-size:.58rem; letter-spacing:.28em; color:var(--gold); text-transform:uppercase; margin-bottom:20px; display:flex; align-items:center; gap:12px; }
-    .hero-eyebrow::before { content:''; display:block; width:32px; height:1px; background:var(--gold); }
-    /* dark card behind hero text for legibility */
-    .hero-card {
-      display:inline-block;
-      background:rgba(8,8,7,.62);
-      backdrop-filter:blur(12px);
-      -webkit-backdrop-filter:blur(12px);
-      border:1px solid rgba(255,255,255,.07);
-      border-left:2px solid var(--gold);
-      padding:32px 40px 36px;
-      max-width:640px;
+    /* ── CONTENT SHELL ── */
+    #stage {
+      position:fixed; inset:56px 0 40px 0; z-index:10;
+      display:flex; align-items:center; justify-content:center;
+      pointer-events:none;
     }
-    .hero-title {
-      font-family:var(--display); font-weight:900; text-transform:uppercase;
-      font-size:clamp(4.5rem, 10vw, 9.5rem); line-height:.92; letter-spacing:.01em;
-      color:#fff;
-    }
-    .hero-title .accent { color:var(--gold); display:block; }
-    .hero-title .stroke { -webkit-text-stroke:1px rgba(255,255,255,.35); color:transparent; }
-    .hero-sub { font-size:.84rem; color:rgba(255,255,255,.75); font-weight:400; margin-top:20px; line-height:1.75; letter-spacing:.02em; }
-    .hero-cta { display:inline-flex; align-items:center; gap:10px; margin-top:28px; font-family:var(--display); font-size:1rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#fff; border:1px solid rgba(255,255,255,.25); padding:12px 28px; cursor:pointer; background:none; transition:background .25s, border-color .25s; }
-    .hero-cta:hover { background:rgba(200,164,94,.14); border-color:var(--gold); color:var(--gold); }
 
-    /* ABOUT */
-    #panel-about .panel-title { font-family:var(--display); font-weight:900; font-size:clamp(3rem,6vw,6rem); text-transform:uppercase; letter-spacing:.03em; line-height:.9; margin-bottom:36px; }
-    #panel-about .panel-title span { color:var(--gold); }
-    .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; flex:1; }
-    /* glass card behind text columns */
-    .glass-card {
-      background:rgba(8,8,7,.65);
-      backdrop-filter:blur(16px);
-      -webkit-backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,.08);
-      padding:28px 32px;
+    /* ── PANELS ── */
+    .panel {
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:48px 72px 52px;
+      opacity:0; pointer-events:none;
+      transition:opacity .6s ease;
     }
-    .body-text { font-size:.84rem; line-height:1.9; color:rgba(255,255,255,.78); font-weight:400; margin-bottom:12px; letter-spacing:.01em; }
-    .social-row { display:flex; flex-wrap:wrap; gap:7px; margin-top:20px; }
-    .social-btn { font-family:var(--mono); font-size:.57rem; letter-spacing:.13em; text-transform:uppercase; text-decoration:none; color:rgba(255,255,255,.55); border:1px solid rgba(255,255,255,.15); padding:7px 14px; transition:color .2s, border-color .2s; }
-    .social-btn:hover { color:#fff; border-color:var(--gold); }
-    .skills-head { font-family:var(--mono); font-size:.5rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:18px; }
+    .panel.active { opacity:1; pointer-events:all; }
+
+    /* ── HOME ── */
+    #panel-home { justify-content:center; }
+    .home-inner { max-width:900px; }
+    .home-tag {
+      font-family:var(--mono); font-size:.5rem; letter-spacing:.32em;
+      color:var(--ember); text-transform:uppercase;
+      display:flex; align-items:center; gap:14px; margin-bottom:24px;
+      animation:fadeUp .8s ease both .2s;
+    }
+    .home-tag::before { content:''; display:block; width:40px; height:1px; background:var(--ember); }
+
+    .home-title {
+      font-family:var(--display); font-weight:700; text-transform:uppercase;
+      font-size:clamp(5rem, 12vw, 11rem); line-height:.88; letter-spacing:-.01em;
+      color:var(--white);
+      animation:fadeUp .9s cubic-bezier(.16,1,.3,1) both .35s;
+    }
+    .home-title .outline {
+      -webkit-text-stroke:1px rgba(240,237,232,.3);
+      color:transparent; display:block;
+    }
+    .home-title .filled { display:block; }
+    .home-title .amber { color:var(--ember); display:block; }
+
+    .home-sub {
+      font-family:var(--body); font-style:italic; font-size:.92rem;
+      color:var(--dim); line-height:1.85; margin-top:24px; max-width:480px;
+      animation:fadeUp .8s ease both .55s;
+    }
+    .home-cta {
+      display:inline-flex; align-items:center; gap:12px; margin-top:32px;
+      font-family:var(--display); font-size:.8rem; font-weight:600;
+      letter-spacing:.3em; text-transform:uppercase; color:var(--white);
+      background:none; border:1px solid rgba(240,237,232,.25);
+      padding:13px 32px; cursor:pointer;
+      transition:border-color .3s, color .3s, background .3s;
+      animation:fadeUp .7s ease both .7s;
+    }
+    .home-cta:hover { border-color:var(--ember); color:var(--ember); background:rgba(200,147,90,.06); }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(28px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── INNER PANEL COMMON ── */
+    .panel-bg {
+      position:absolute; inset:0;
+      background:linear-gradient(to right, rgba(4,4,3,.92) 0%, rgba(4,4,3,.75) 60%, rgba(4,4,3,.4) 100%);
+      pointer-events:none;
+    }
+    .panel-content { position:relative; z-index:2; }
+
+    .panel-super {
+      font-family:var(--mono); font-size:.46rem; letter-spacing:.3em;
+      color:var(--ember); text-transform:uppercase;
+      display:flex; align-items:center; gap:12px; margin-bottom:16px;
+    }
+    .panel-super::before { content:''; display:block; width:28px; height:1px; background:var(--ember); }
+
+    .panel-title {
+      font-family:var(--display); font-weight:700; text-transform:uppercase;
+      font-size:clamp(3.2rem, 7vw, 7rem); line-height:.88; letter-spacing:-.01em;
+      color:var(--white); margin-bottom:40px;
+    }
+    .panel-title span { color:var(--ember); }
+
+    /* ── ABOUT ── */
+    .about-cols { display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+
+    .col-block {
+      border-left:1px solid var(--rule); padding-left:24px;
+    }
+    .col-label { font-family:var(--mono); font-size:.46rem; letter-spacing:.24em; text-transform:uppercase; color:var(--faint); margin-bottom:16px; }
+    .body-text { font-family:var(--body); font-size:.88rem; line-height:1.9; color:var(--dim); margin-bottom:11px; }
+
+    .social-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:20px; }
+    .social-btn {
+      font-family:var(--mono); font-size:.52rem; letter-spacing:.14em; text-transform:uppercase;
+      text-decoration:none; color:var(--faint); border:1px solid var(--rule);
+      padding:6px 14px; transition:color .2s, border-color .2s;
+    }
+    .social-btn:hover { color:var(--white); border-color:var(--ember); }
+
     .skill-group { margin-bottom:14px; }
-    .skill-group-name { font-family:var(--mono); font-size:.52rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:8px; }
+    .skill-group-name { font-family:var(--mono); font-size:.46rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ember); margin-bottom:8px; opacity:.8; }
     .skill-tags { display:flex; flex-wrap:wrap; gap:5px; }
-    .skill-tag { font-family:var(--mono); font-size:.62rem; padding:4px 10px; border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.6); }
+    .skill-tag { font-family:var(--mono); font-size:.58rem; padding:4px 10px; border:1px solid var(--rule); color:var(--faint); }
 
-    /* DEMOREEL */
-    #panel-demoreel .panel-title { font-family:var(--display); font-weight:900; font-size:clamp(3rem,6vw,6rem); text-transform:uppercase; letter-spacing:.03em; line-height:.9; margin-bottom:36px; }
-    #panel-demoreel .panel-title span { color:var(--gold); }
-    .reel-grid { display:grid; grid-template-columns:2fr 1fr; gap:32px; align-items:start; }
-    .video-wrap { position:relative; }
-    .video-wrap::before, .video-wrap::after { content:''; position:absolute; width:18px; height:18px; border-color:var(--gold); border-style:solid; z-index:2; pointer-events:none; }
-    .video-wrap::before { top:-6px; left:-6px; border-width:2px 0 0 2px; }
-    .video-wrap::after  { bottom:-6px; right:-6px; border-width:0 2px 2px 0; }
-    .video-ratio { position:relative; padding-bottom:56.25%; overflow:hidden; background:#000; }
+    /* ── DEMOREEL ── */
+    .reel-row { display:grid; grid-template-columns:2.2fr 1fr; gap:40px; align-items:start; }
+    .video-frame { position:relative; }
+    /* film sprocket decoration */
+    .video-frame::before, .video-frame::after {
+      content:''; position:absolute; top:-8px; bottom:-8px; width:16px;
+      background: repeating-linear-gradient(180deg, transparent 0, transparent 6px, var(--rule) 6px, var(--rule) 7px, transparent 7px, transparent 12px);
+      z-index:2;
+    }
+    .video-frame::before { left:-20px; }
+    .video-frame::after  { right:-20px; }
+    .video-ratio { position:relative; padding-bottom:56.25%; background:#000; overflow:hidden; }
     .video-ratio iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
-    .reel-desc { font-size:.84rem; line-height:1.9; color:rgba(255,255,255,.78); font-weight:400; margin-bottom:24px; }
-    .yt-btn { font-family:var(--display); font-size:.95rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; display:inline-flex; align-items:center; gap:10px; text-decoration:none; color:rgba(255,255,255,.45); transition:color .2s; }
-    .yt-btn:hover { color:var(--gold); }
+    .reel-meta { border-left:1px solid var(--rule); padding-left:24px; }
+    .reel-desc { font-family:var(--body); font-style:italic; font-size:.88rem; line-height:1.9; color:var(--dim); margin-bottom:24px; }
+    .yt-link {
+      font-family:var(--display); font-size:.72rem; font-weight:600;
+      letter-spacing:.22em; text-transform:uppercase;
+      text-decoration:none; color:var(--faint);
+      display:flex; align-items:center; gap:10px;
+      transition:color .2s;
+    }
+    .yt-link:hover { color:var(--ember); }
 
-    /* CONTACT */
-    #panel-contact .panel-title { font-family:var(--display); font-weight:900; font-size:clamp(3rem,6vw,6rem); text-transform:uppercase; letter-spacing:.03em; line-height:.9; margin-bottom:36px; }
-    #panel-contact .panel-title span { color:var(--gold); }
-    .contact-inner { max-width:500px; }
-    .form-group { margin-bottom:16px; }
-    .form-group label { font-family:var(--mono); display:block; font-size:.52rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:7px; }
-    .form-group input, .form-group textarea { width:100%; border:none; border-bottom:1px solid rgba(255,255,255,.2); padding:10px 0; font-family:var(--body); font-size:.88rem; font-weight:400; outline:none; resize:none; background:transparent; color:#fff; transition:border-color .2s; letter-spacing:.02em; }
-    .form-group input::placeholder, .form-group textarea::placeholder { color:rgba(255,255,255,.28); }
-    .form-group input:focus, .form-group textarea:focus { border-color:var(--gold); }
-    .form-group textarea { height:90px; }
-    .btn-submit { font-family:var(--display); font-size:1.1rem; font-weight:800; letter-spacing:.22em; text-transform:uppercase; width:100%; padding:14px; border:none; cursor:pointer; margin-top:10px; background:var(--gold); color:var(--ink); transition:opacity .2s; }
-    .btn-submit:hover { opacity:.88; }
-
-    /* FOOTER BAR */
-    #footer-bar { position:fixed; bottom:0; left:0; right:0; z-index:3; padding:10px 56px; border-top:1px solid var(--rule); display:flex; justify-content:space-between; align-items:center; }
-    #footer-bar span { font-family:var(--mono); font-size:.5rem; letter-spacing:.14em; color:rgba(255,255,255,.16); text-transform:uppercase; }
+    /* ── CONTACT ── */
+    .contact-inner { max-width:520px; }
+    .contact-sub { font-family:var(--body); font-style:italic; font-size:.88rem; color:var(--dim); margin-bottom:32px; line-height:1.8; }
+    .form-row { margin-bottom:20px; }
+    .form-row label { font-family:var(--mono); display:block; font-size:.44rem; letter-spacing:.24em; text-transform:uppercase; color:var(--faint); margin-bottom:8px; }
+    .form-row input, .form-row textarea {
+      width:100%; background:rgba(240,237,232,.04); border:none;
+      border-bottom:1px solid rgba(240,237,232,.18);
+      padding:10px 0; font-family:var(--body); font-size:.9rem;
+      color:var(--white); outline:none; resize:none;
+      transition:border-color .25s;
+    }
+    .form-row input::placeholder, .form-row textarea::placeholder { color:rgba(240,237,232,.2); }
+    .form-row input:focus, .form-row textarea:focus { border-color:var(--ember); }
+    .form-row textarea { height:84px; }
+    .btn-send {
+      font-family:var(--display); font-weight:600; font-size:.88rem;
+      letter-spacing:.3em; text-transform:uppercase;
+      width:100%; padding:14px; margin-top:8px;
+      background:var(--ember); color:var(--black);
+      border:none; cursor:pointer; transition:opacity .2s;
+    }
+    .btn-send:hover { opacity:.88; }
 
     @media (max-width:860px) {
-      .tabs .tab { padding:14px 18px; }
-      .tab-name { font-size:1.3rem; }
-      .logo-wrap, .header-right { min-width:unset; padding:0 20px; }
-      .panel { padding:36px 24px; }
-      .about-grid, .reel-grid { grid-template-columns:1fr; gap:32px; }
-      #footer-bar { padding:10px 24px; }
+      #bar-top, #bar-bottom { padding:0 20px; }
+      .topnav-link { padding:0 18px; }
+      .panel { padding:32px 24px 40px; }
+      .about-cols, .reel-row { grid-template-columns:1fr; gap:24px; }
     }
   </style>
 </head>
 <body>
 
 <video id="bg-video" src="background.webm" autoplay loop muted playsinline></video>
-<div id="bg-overlay"></div>
+<div id="vignette"></div>
 
-<div id="shell">
-  <header>
-    <a href="#" class="logo" onclick="showHome();return false;">PORTFOLIO<em>.</em></a>
+<!-- TOP BAR -->
+<div id="bar-top">
+  <a class="logo" onclick="showHome()">PORTFOLIO<span>.</span></a>
 
-    <div class="tabs">
-      <button class="tab" id="tab-about" onclick="openTab('about')">
-        <span class="tab-num">01</span>
-        <span class="tab-name">About</span>
-      </button>
-      <button class="tab" id="tab-demoreel" onclick="openTab('demoreel')">
-        <span class="tab-num">02</span>
-        <span class="tab-name">Demoreel</span>
-      </button>
-      <button class="tab" id="tab-contact" onclick="openTab('contact')">
-        <span class="tab-num">03</span>
-        <span class="tab-name">Contact</span>
-      </button>
+  <nav class="topnav">
+    <button class="topnav-link" id="tab-about" onclick="openTab('about')">
+      <span class="topnav-num">01</span>About
+    </button>
+    <button class="topnav-link" id="tab-demoreel" onclick="openTab('demoreel')">
+      <span class="topnav-num">02</span>Demoreel
+    </button>
+    <button class="topnav-link" id="tab-contact" onclick="openTab('contact')">
+      <span class="topnav-num">03</span>Contact
+    </button>
+  </nav>
+
+  <div class="bar-right">
+    <div class="live-dot"></div>
+    <span class="bar-loc">Tokyo&nbsp;·&nbsp;JP</span>
+  </div>
+</div>
+
+<!-- BOTTOM BAR -->
+<div id="bar-bottom">
+  <span class="bar-copy">© 2024 All Rights Reserved</span>
+  <span class="bar-status" id="bar-status">— Home</span>
+</div>
+
+<!-- STAGE -->
+<div id="stage">
+
+  <!-- HOME -->
+  <div class="panel active" id="panel-home">
+    <div class="home-inner">
+      <div class="home-tag">3D CG Artist &amp; Motion Designer</div>
+      <h1 class="home-title">
+        <span class="outline">Motion</span>
+        <span class="filled">That</span>
+        <span class="amber">Hits.</span>
+      </h1>
+      <p class="home-sub">End-to-end production — modeling, simulation, rendering, compositing. Photorealistic VFX to real-time CG, built to move.</p>
+      <button class="home-cta" onclick="openTab('demoreel')">Watch Demoreel →</button>
     </div>
+  </div>
 
-    <div class="header-right">
-      <div class="header-dot"></div>
-      <span class="header-loc">Tokyo, Japan</span>
-    </div>
-  </header>
-
-  <div id="content">
-
-    <!-- HOME -->
-    <div class="panel active" id="panel-home">
-      <div class="hero-eyebrow">3D CG Artist &amp; Motion Designer</div>
-      <div class="hero-card">
-        <h1 class="hero-title">
-          <span class="stroke">Motion</span>
-          <span>That</span>
-          <span class="accent">Hits.</span>
-        </h1>
-        <p class="hero-sub">End-to-end production — modeling, simulation, rendering, compositing. Photorealistic VFX to real-time CG, built to move.</p>
-        <button class="hero-cta" onclick="openTab('demoreel')">Watch Demoreel →</button>
-      </div>
-    </div>
-
-    <!-- ABOUT -->
-    <div class="panel" id="panel-about">
+  <!-- ABOUT -->
+  <div class="panel" id="panel-about">
+    <div class="panel-bg"></div>
+    <div class="panel-content">
+      <div class="panel-super">Profile</div>
       <h2 class="panel-title">About <span>Me</span></h2>
-      <div class="about-grid">
-        <div class="glass-card">
+      <div class="about-cols">
+        <div class="col-block">
+          <div class="col-label">Bio</div>
           <p class="body-text">Tokyo-based 3D CG artist and motion designer specializing in visual effects, cinematics, and brand-driven motion content.</p>
-          <p class="body-text">With experience spanning advertising, games, and film, I deliver end-to-end production — from concept and modeling through rendering and compositing.</p>
-          <p class="body-text">My approach bridges photorealistic VFX and real-time CG, always prioritizing the client's creative vision and deadline.</p>
+          <p class="body-text">Experience spanning advertising, games, and film — end-to-end production from concept and modeling through rendering and compositing.</p>
+          <p class="body-text">Bridging photorealistic VFX and real-time CG, always prioritizing the client's creative vision.</p>
           <div class="social-row">
             <a class="social-btn" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener">YouTube</a>
             <a class="social-btn" href="https://www.artstation.com/tajimiryo" target="_blank" rel="noopener">ArtStation</a>
             <a class="social-btn" href="https://www.behance.net/tajimi" target="_blank" rel="noopener">Behance</a>
-            <a class="social-btn" href="https://x.com/lipe02x" target="_blank" rel="noopener">X / Twitter</a>
+            <a class="social-btn" href="https://x.com/lipe02x" target="_blank" rel="noopener">X</a>
           </div>
         </div>
-        <div class="glass-card">
-          <p class="skills-head">Software &amp; Tools</p>
+        <div class="col-block">
+          <div class="col-label">Software &amp; Tools</div>
           <div class="skill-group">
-            <p class="skill-group-name">3D / VFX</p>
-            <div class="skill-tags">
-              <span class="skill-tag">Blender</span><span class="skill-tag">Cinema 4D</span><span class="skill-tag">Maya</span><span class="skill-tag">Houdini</span><span class="skill-tag">ZBrush</span><span class="skill-tag">Unreal Engine</span>
-            </div>
+            <div class="skill-group-name">3D / VFX</div>
+            <div class="skill-tags"><span class="skill-tag">Blender</span><span class="skill-tag">Cinema 4D</span><span class="skill-tag">Maya</span><span class="skill-tag">Houdini</span><span class="skill-tag">ZBrush</span><span class="skill-tag">Unreal Engine</span></div>
           </div>
           <div class="skill-group">
-            <p class="skill-group-name">Compositing / Edit</p>
-            <div class="skill-tags">
-              <span class="skill-tag">After Effects</span><span class="skill-tag">Premiere Pro</span><span class="skill-tag">DaVinci Resolve</span><span class="skill-tag">Nuke</span>
-            </div>
+            <div class="skill-group-name">Compositing / Edit</div>
+            <div class="skill-tags"><span class="skill-tag">After Effects</span><span class="skill-tag">Premiere Pro</span><span class="skill-tag">DaVinci Resolve</span><span class="skill-tag">Nuke</span></div>
           </div>
           <div class="skill-group">
-            <p class="skill-group-name">Design</p>
-            <div class="skill-tags">
-              <span class="skill-tag">Photoshop</span><span class="skill-tag">Illustrator</span><span class="skill-tag">Figma</span><span class="skill-tag">Affinity Photo</span><span class="skill-tag">Affinity Designer</span>
-            </div>
+            <div class="skill-group-name">Design</div>
+            <div class="skill-tags"><span class="skill-tag">Photoshop</span><span class="skill-tag">Illustrator</span><span class="skill-tag">Figma</span><span class="skill-tag">Affinity Photo</span><span class="skill-tag">Affinity Designer</span></div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- DEMOREEL -->
-    <div class="panel" id="panel-demoreel">
+  <!-- DEMOREEL -->
+  <div class="panel" id="panel-demoreel">
+    <div class="panel-bg"></div>
+    <div class="panel-content">
+      <div class="panel-super">Showreel</div>
       <h2 class="panel-title">3D <span>Demoreel</span></h2>
-      <div class="reel-grid">
-        <div class="video-wrap">
+      <div class="reel-row">
+        <div class="video-frame">
           <div class="video-ratio">
             <iframe src="https://www.youtube.com/embed/YjGaAXRy_2k?list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw&rel=0&modestbranding=1" title="3D Demoreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
-        <div class="glass-card">
+        <div class="reel-meta">
           <p class="reel-desc">Full-pipeline production — 3D modeling and simulation through rendering and compositing. Photorealistic VFX to real-time CG across advertising, film, and games.</p>
-          <a class="yt-btn" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">View All Works →</a>
+          <a class="yt-link" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">View All Works on YouTube →</a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- CONTACT -->
-    <div class="panel" id="panel-contact">
+  <!-- CONTACT -->
+  <div class="panel" id="panel-contact">
+    <div class="panel-bg"></div>
+    <div class="panel-content">
+      <div class="panel-super">Enquiry</div>
       <h2 class="panel-title">Get In <span>Touch</span></h2>
-      <div class="glass-card contact-inner">
-        <div class="form-group"><label>Full Name</label><input type="text" placeholder="Taro Yamada"/></div>
-        <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
-        <div class="form-group"><label>Message</label><textarea placeholder="Tell me about your project..."></textarea></div>
-        <button class="btn-submit">Send Enquiry</button>
+      <div class="contact-inner">
+        <p class="contact-sub">Open for new projects, collaborations, and commissions. Send a message and I'll get back within 24 hours.</p>
+        <div class="form-row"><label>Full Name</label><input type="text" placeholder="Taro Yamada"/></div>
+        <div class="form-row"><label>Email Address</label><input type="email" placeholder="your@email.com"/></div>
+        <div class="form-row"><label>Message</label><textarea placeholder="Tell me about your project..."></textarea></div>
+        <button class="btn-send">Send Enquiry</button>
       </div>
     </div>
+  </div>
 
-  </div><!-- /content -->
-</div><!-- /shell -->
-
-<div id="footer-bar">
-  <span>© 2024 All Rights Reserved</span>
-  <span id="footer-current">— Home</span>
-</div>
+</div><!-- /stage -->
 
 <script>
-  let current = null;
-
   function openTab(id) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.topnav-link').forEach(t => t.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
     document.getElementById('tab-' + id).classList.add('active');
-    document.getElementById('footer-current').textContent = '— ' + id.charAt(0).toUpperCase() + id.slice(1);
-    current = id;
+    const labels = {about:'About', demoreel:'Demoreel', contact:'Contact'};
+    document.getElementById('bar-status').textContent = '— ' + labels[id];
   }
-
   function showHome() {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.topnav-link').forEach(t => t.classList.remove('active'));
     document.getElementById('panel-home').classList.add('active');
-    document.getElementById('footer-current').textContent = '— Home';
-    current = null;
+    document.getElementById('bar-status').textContent = '— Home';
   }
 </script>
 </body>

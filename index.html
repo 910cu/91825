@@ -9,13 +9,11 @@
     :root {
       --white: #fff;
       --off: #f6f5f2;
-      --mid: #c8c4bc;
       --ink: #1a1917;
       --gold: #c9a96e;
       --serif: 'Cormorant Garamond', serif;
       --sans: 'DM Sans', sans-serif;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { font-family: var(--sans); color: var(--ink); background: var(--white); overflow-x: hidden; }
@@ -25,7 +23,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
       padding: 24px 48px;
-      background: rgba(255,255,255,0.9); backdrop-filter: blur(12px);
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid transparent; transition: border-color .3s, padding .3s;
     }
     nav.scrolled { border-color: #eee; padding: 16px 48px; }
@@ -44,18 +42,18 @@
     .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 28px; background: var(--ink); color: var(--white); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; text-decoration: none; transition: opacity .2s; }
     .btn:hover { opacity: .8; }
 
-    /* SECTIONS */
+    /* COMMON */
     section { padding: 100px 48px; }
     .label { font-size: .65rem; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
     h2 { font-family: var(--serif); font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.1; margin-bottom: 48px; }
     h2 em { font-style: italic; color: #b8a99a; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .body-text { font-size: .9rem; line-height: 1.9; color: #666; font-weight: 300; margin-bottom: 16px; }
 
     /* ABOUT */
     #about { background: var(--off); }
-    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .about-body { font-size: .9rem; line-height: 1.9; color: #666; font-weight: 300; margin-bottom: 16px; }
-    .skills-title { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: #999; margin: 40px 0 20px; }
-    .skills-groups { display: flex; flex-direction: column; gap: 24px; }
+    .skills-label { font-size: .65rem; letter-spacing: .18em; text-transform: uppercase; color: #999; margin: 40px 0 20px; }
+    .skill-group { margin-bottom: 24px; }
     .skill-group-name { font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
     .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
     .skill-tag { padding: 6px 14px; border: 1px solid #ddd; font-size: .75rem; color: #555; background: #fff; }
@@ -71,11 +69,7 @@
     .bg2 { background: linear-gradient(145deg, #e8e3db, #d4cec5); }
     .bg3 { background: linear-gradient(145deg, #d0cac0, #bfb8ac); }
     .bg4 { background: linear-gradient(145deg, #e0ddd7, #ccc6bc); }
-    .card-info {
-      position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 24px;
-      background: linear-gradient(transparent, rgba(20,20,18,.8));
-      transform: translateY(6px); transition: transform .3s;
-    }
+    .card-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 24px; background: linear-gradient(transparent, rgba(20,20,18,.8)); transform: translateY(6px); transition: transform .3s; }
     .card:hover .card-info { transform: translateY(0); }
     .card-cat { font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
     .card-name { font-family: var(--serif); font-size: 1.3rem; font-weight: 300; color: #fff; line-height: 1.2; }
@@ -86,13 +80,10 @@
     #demoreel h2 { color: #fff; }
     .demoreel-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 64px; align-items: start; }
     .demoreel-desc { font-size: .88rem; line-height: 1.85; color: #6a6560; font-weight: 300; margin-bottom: 32px; }
-    .yt-link { display: inline-flex; align-items: center; gap: 8px; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: #4a4840; text-decoration: none; transition: color .2s; }
+    .yt-link { display: inline-flex; align-items: center; gap: 8px; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: #5a5450; text-decoration: none; transition: color .2s; }
     .yt-link:hover { color: var(--gold); }
     .video-wrap { position: relative; }
-    .video-wrap::before, .video-wrap::after {
-      content: ''; position: absolute; width: 18px; height: 18px;
-      border-color: var(--gold); border-style: solid; z-index: 2; pointer-events: none;
-    }
+    .video-wrap::before, .video-wrap::after { content: ''; position: absolute; width: 18px; height: 18px; border-color: var(--gold); border-style: solid; z-index: 2; pointer-events: none; }
     .video-wrap::before { top: -6px; left: -6px; border-width: 2px 0 0 2px; }
     .video-wrap::after  { bottom: -6px; right: -6px; border-width: 0 2px 2px 0; }
     .video-ratio { position: relative; padding-bottom: 56.25%; overflow: hidden; background: #000; }
@@ -100,23 +91,13 @@
 
     /* CONTACT */
     #contact { background: var(--off); }
-    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
     .contact-desc { font-size: .88rem; line-height: 1.8; color: #666; font-weight: 300; margin-bottom: 40px; }
-    .contact-list { display: flex; flex-direction: column; gap: 12px; }
-    .c-link {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 16px 20px; border: 1px solid #ddd;
-      text-decoration: none; color: var(--ink); font-size: .85rem;
-      transition: border-color .2s, background .2s;
-    }
+    .link-list { display: flex; flex-direction: column; gap: 12px; }
+    .c-link { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border: 1px solid #ddd; text-decoration: none; color: var(--ink); font-size: .85rem; transition: border-color .2s, background .2s; }
     .c-link:hover { border-color: var(--gold); background: #fff; }
     .form-group { margin-bottom: 20px; }
     .form-group label { display: block; font-size: .65rem; letter-spacing: .16em; text-transform: uppercase; color: #999; margin-bottom: 8px; }
-    .form-group input, .form-group textarea {
-      width: 100%; border: 1px solid #ddd; padding: 12px 16px;
-      font-family: var(--sans); font-size: .88rem; outline: none; resize: none;
-      transition: border-color .2s; background: #fff;
-    }
+    .form-group input, .form-group textarea { width: 100%; border: 1px solid #ddd; padding: 12px 16px; font-family: var(--sans); font-size: .88rem; outline: none; resize: none; transition: border-color .2s; background: #fff; }
     .form-group input:focus, .form-group textarea:focus { border-color: var(--gold); }
     .form-group textarea { height: 110px; }
     .btn-submit { width: 100%; padding: 14px; background: var(--ink); color: #fff; font-family: var(--sans); font-size: .75rem; letter-spacing: .16em; text-transform: uppercase; border: none; cursor: pointer; transition: opacity .2s; }
@@ -131,15 +112,17 @@
     /* REVEAL */
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s, transform .7s; }
     .reveal.on { opacity: 1; transform: none; }
-    .d1 { transition-delay: .1s; } .d2 { transition-delay: .2s; }
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
 
     @media (max-width: 900px) {
-      nav { padding: 18px 24px; } nav.scrolled { padding: 14px 24px; }
+      nav { padding: 18px 24px; }
+      nav.scrolled { padding: 14px 24px; }
       section { padding: 72px 24px; }
       #hero { padding: 100px 24px 64px; }
       .grid { grid-template-columns: 1fr 1fr; }
       .card:first-child { grid-column: span 2; }
-      .about-grid, .demoreel-layout, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .two-col, .demoreel-layout { grid-template-columns: 1fr; gap: 40px; }
       footer { flex-direction: column; gap: 10px; text-align: center; }
     }
     @media (max-width: 560px) {
@@ -172,41 +155,39 @@
 <section id="about">
   <p class="label reveal">About</p>
   <h2 class="reveal">自己<em>紹介</em></h2>
-  <div class="about-grid">
+  <div class="two-col">
     <div class="reveal">
-      <p class="about-body">はじめまして。東京を拠点に活動する3DCGアーティスト・モーションデザイナーです。</p>
-      <p class="about-body">映像制作・ビジュアルエフェクト・ブランディングを専門とし、広告・ゲーム・映画など幅広い分野でのプロジェクトに携わってきました。</p>
-      <p class="about-body">リアルタイムCGからフォトリアルなVFXまで、クライアントのビジョンを形にすることを大切にしています。</p>
+      <p class="body-text">はじめまして。東京を拠点に活動する3DCGアーティスト・モーションデザイナーです。</p>
+      <p class="body-text">映像制作・ビジュアルエフェクト・ブランディングを専門とし、広告・ゲーム・映画など幅広い分野でのプロジェクトに携わってきました。</p>
+      <p class="body-text">リアルタイムCGからフォトリアルなVFXまで、クライアントのビジョンを形にすることを大切にしています。</p>
     </div>
     <div class="reveal d1">
-      <p class="skills-title">使用ソフトウェア</p>
-      <div class="skills-groups">
-        <div>
-          <p class="skill-group-name">3D / VFX</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Blender</span>
-            <span class="skill-tag">Cinema 4D</span>
-            <span class="skill-tag">Maya</span>
-            <span class="skill-tag">Houdini</span>
-            <span class="skill-tag">ZBrush</span>
-            <span class="skill-tag">Unreal Engine</span>
-          </div>
+      <p class="skills-label">使用ソフトウェア</p>
+      <div class="skill-group">
+        <p class="skill-group-name">3D / VFX</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Blender</span>
+          <span class="skill-tag">Cinema 4D</span>
+          <span class="skill-tag">Maya</span>
+          <span class="skill-tag">Houdini</span>
+          <span class="skill-tag">ZBrush</span>
+          <span class="skill-tag">Unreal Engine</span>
         </div>
-        <div>
-          <p class="skill-group-name">映像 / 編集</p>
-          <div class="skill-tags">
-            <span class="skill-tag">After Effects</span>
-            <span class="skill-tag">Premiere Pro</span>
-            <span class="skill-tag">Nuke</span>
-          </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-name">映像 / 編集</p>
+        <div class="skill-tags">
+          <span class="skill-tag">After Effects</span>
+          <span class="skill-tag">Premiere Pro</span>
+          <span class="skill-tag">Nuke</span>
         </div>
-        <div>
-          <p class="skill-group-name">デザイン</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Photoshop</span>
-            <span class="skill-tag">Illustrator</span>
-            <span class="skill-tag">Figma</span>
-          </div>
+      </div>
+      <div class="skill-group">
+        <p class="skill-group-name">デザイン</p>
+        <div class="skill-tags">
+          <span class="skill-tag">Photoshop</span>
+          <span class="skill-tag">Illustrator</span>
+          <span class="skill-tag">Figma</span>
         </div>
       </div>
     </div>
@@ -230,9 +211,7 @@
   <div class="demoreel-layout">
     <div class="reveal">
       <p class="demoreel-desc">3Dモデリングからレンダリング、コンポジットまで一貫して制作。リアルタイムCGからフォトリアルなVFXまで幅広く対応しています。</p>
-      <a class="yt-link" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">
-        YouTubeで全作品を見る →
-      </a>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">YouTubeで全作品を見る →</a>
     </div>
     <div class="video-wrap reveal d2">
       <div class="video-ratio">
@@ -245,10 +224,10 @@
 <section id="contact">
   <p class="label reveal">Contact</p>
   <h2 class="reveal">お問い合わせ</h2>
-  <div class="contact-grid">
+  <div class="two-col">
     <div class="reveal">
       <p class="contact-desc">新しいプロジェクトのご相談、コラボレーションのご提案など、お気軽にご連絡ください。</p>
-      <div class="contact-list">
+      <div class="link-list">
         <a class="c-link" href="mailto:hello@portfolio.com">hello@portfolio.com <span>→</span></a>
         <a class="c-link" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener">YouTube <span>→</span></a>
         <a class="c-link" href="https://www.artstation.com/tajimiryo" target="_blank" rel="noopener">ArtStation <span>→</span></a>
@@ -269,7 +248,11 @@
   <div class="foot-copy">© 2024 All Rights Reserved</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
-  const io 
+  const io = new IntersectionObserver(es => es.forEach(e => e.isIntersecting && (e.target.classList.add('on'), io.unobserve(e.target))), { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>

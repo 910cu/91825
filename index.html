@@ -388,6 +388,74 @@
       transform: rotate(-30deg);
     }
 
+    /* ──────────────── SHOWREEL ──────────────── */
+    #showreel {
+      background: var(--ink);
+      padding: 120px 60px;
+      text-align: center;
+    }
+    #showreel .section-label { justify-content: center; color: var(--gold); }
+    #showreel .section-label::before { display: none; }
+    #showreel .section-label::after {
+      content: ''; width: 32px; height: 1px; background: var(--gold);
+    }
+    #showreel .section-title {
+      color: var(--white);
+      margin-bottom: 64px;
+    }
+
+    .showreel-wrapper {
+      position: relative;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    /* Decorative border frame */
+    .showreel-frame {
+      position: relative;
+      padding: 2px;
+      background: linear-gradient(135deg, rgba(201,169,110,0.6), rgba(200,196,188,0.15) 50%, rgba(201,169,110,0.4));
+    }
+    .showreel-frame::before,
+    .showreel-frame::after {
+      content: '';
+      position: absolute;
+      width: 24px; height: 24px;
+      border-color: var(--gold); border-style: solid;
+      z-index: 2;
+    }
+    .showreel-frame::before {
+      top: -8px; left: -8px;
+      border-width: 2px 0 0 2px;
+    }
+    .showreel-frame::after {
+      bottom: -8px; right: -8px;
+      border-width: 0 2px 2px 0;
+    }
+
+    .video-ratio {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+      overflow: hidden;
+      background: #000;
+    }
+    .video-ratio iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .showreel-caption {
+      margin-top: 32px;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #4a4840;
+    }
+    .showreel-caption span { color: var(--gold); }
+
     /* ──────────────── SERVICES ──────────────── */
     #services { background: var(--ink); color: var(--white); }
     #services .section-label { color: var(--gold); }
@@ -628,6 +696,7 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#works">Works</a></li>
+    <li><a href="#showreel">Showreel</a></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -804,6 +873,26 @@
   </div>
 </section>
 
+<!-- ── SHOWREEL ── -->
+<section id="showreel">
+  <p class="section-label reveal">Showreel</p>
+  <h2 class="section-title reveal">映像<em>作品</em></h2>
+
+  <div class="showreel-wrapper reveal">
+    <div class="showreel-frame">
+      <div class="video-ratio">
+        <iframe
+          src="https://www.youtube.com/embed/yP8mGm5Xm2M?rel=0&modestbranding=1&color=white"
+          title="Showreel"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+    <p class="showreel-caption">Latest Work — <span>2024</span></p>
+  </div>
+</section>
+
 <!-- ── SERVICES ── -->
 <section id="services">
   <p class="section-label reveal">What I Do</p>
@@ -925,8 +1014,8 @@
       お見積もりなど、お気軽にご連絡ください。
     </p>
     <div class="contact-links">
-      <a class="contact-link" href="mailto:hello@portfolio.com">
-        hello@portfolio.com
+      <a class="contact-link" href="/cdn-cgi/l/email-protection#aec6cbc2c2c1eedec1dcdac8c1c2c7c180cdc1c3">
+        <span class="__cf_email__" data-cfemail="58303d3434371828372a2c3e37343137763b3735">[email&#160;protected]</span>
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
           <path d="M2 14L14 2M14 2H6M14 2v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
@@ -973,7 +1062,7 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Nav scroll effect
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
@@ -983,14 +1072,4 @@
   // Reveal on scroll
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
-</script>
-</body>
-</html>
+    entrie

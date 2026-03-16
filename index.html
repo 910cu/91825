@@ -323,16 +323,9 @@
     .panel.active .phead{animation:rise .6s cubic-bezier(.16,1,.3,1) both .04s;}
     .panel.active .about-grid,.panel.active .works-layout,.panel.active .contact-grid{animation:rise .7s cubic-bezier(.16,1,.3,1) both .18s;}
 
-    /* ═══ 3D PANEL — スクロールなしで画面内に収める ═══ */
-    #panel-3d .pic{gap:0;}
-    #panel-3d .thumb-row{
-      flex:1;min-height:0;
-    }
-    /* aspect-ratioを解除してグリッドの高さに追従させる */
-    #panel-3d .thumb{
-      aspect-ratio:unset;
-      height:100%;
-    }
+    /* ═══ 3D PANEL — 2カラムレイアウト ═══ */
+    .works-3d{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0;}
+    .works-3d-col{display:flex;flex-direction:column;gap:10px;min-height:0;}
 
       #ph,.pi{padding:28px 24px 36px;}
       .about-grid,.works-layout,.contact-grid{grid-template-columns:1fr;gap:24px;}
@@ -450,41 +443,48 @@
           </div>
           <div class="p-num">02</div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px;flex:1;min-height:0;">
-          <div class="grid-label">Video</div>
-          <div class="thumb-row" style="grid-template-columns:repeat(4,1fr);">
-            <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="3D Demoreel 2024" data-webm="test/preview_demoreel.webm">
-              <video class="thumb-webm" src="test/preview_demoreel.webm" muted loop playsinline preload="metadata"
-                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
+        <div class="works-3d">
+          <!-- 左列: 動画サムネイル -->
+          <div class="works-3d-col">
+            <div class="grid-label">Video</div>
+            <div class="thumb-row" style="grid-template-columns:repeat(3,1fr);">
+              <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="3D Demoreel 2024" data-webm="test/preview_demoreel.webm">
+                <video class="thumb-webm" src="test/preview_demoreel.webm" muted loop playsinline preload="metadata"
+                  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
+              </div>
+              <div class="thumb" data-type="video" data-vid="yP8mGm5Xm2M" data-title="3D Work 2" data-webm="webm/background.webm">
+                <video class="thumb-webm" src="webm/background.webm" muted loop playsinline preload="metadata"
+                  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
+              </div>
+              <div class="thumb" data-type="video" data-vid="eaAmaWYGxWI" data-title="3D Work 3" data-webm="test/preview_work3.webm">
+                <video class="thumb-webm" src="test/preview_work3.webm" muted loop playsinline preload="metadata"
+                  style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
+              </div>
             </div>
-            <div class="thumb" data-type="video" data-vid="yP8mGm5Xm2M" data-title="3D Work 2" data-webm="test/preview_work2.webm">
-              <video class="thumb-webm" src="test/preview_work2.webm" muted loop playsinline preload="metadata"
-                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
-            </div>
-            <div class="thumb" data-type="video" data-vid="eaAmaWYGxWI" data-title="3D Work 3" data-webm="test/preview_work3.webm">
-              <video class="thumb-webm" src="test/preview_work3.webm" muted loop playsinline preload="metadata"
-                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
-            </div>
+            <p class="works-desc">3D modeling, simulation, rendering, and compositing. Photorealistic VFX to real-time CG.</p>
           </div>
-          <div class="grid-label">Image</div>
-          <div class="thumb-row" id="image-grid-3d" style="grid-template-columns:repeat(4,1fr);">
-            <div class="thumb is-image" data-type="image" data-src="test/GothicRoom.jpg" data-title="GothicRoom">
-              <img src="test/GothicRoom.jpg" alt="GothicRoom"/>
-            </div>
-            <div class="thumb is-image" data-type="image" data-src="test/Main.jpg" data-title="Main">
-              <img src="test/Main.jpg" alt="Main"/>
-            </div>
-            <div class="thumb is-image" data-type="image" data-src="test/DirectionalMagnet.png" data-title="DirectionalMagnet">
-              <img src="test/DirectionalMagnet.png" alt="DirectionalMagnet"/>
-            </div>
-            <div class="thumb is-image" data-type="image" data-src="test/Interior_Room.png" data-title="Interior_Room">
-              <img src="test/Interior_Room.png" alt="Interior_Room"/>
-            </div>
-            <div class="thumb is-image" data-type="image" data-src="test/TrafficLIght.png" data-title="TrafficLight">
-              <img src="test/TrafficLIght.png" alt="TrafficLight"/>
-            </div>
-            <div class="thumb is-image" data-type="image" data-src="test/背景.png" data-title="背景">
-              <img src="test/背景.png" alt="背景"/>
+          <!-- 右列: 画像サムネイル -->
+          <div class="works-3d-col">
+            <div class="grid-label">Image</div>
+            <div class="thumb-row" id="image-grid-3d" style="grid-template-columns:repeat(3,1fr);">
+              <div class="thumb is-image" data-type="image" data-src="test/GothicRoom.jpg" data-title="GothicRoom">
+                <img src="test/GothicRoom.jpg" alt="GothicRoom"/>
+              </div>
+              <div class="thumb is-image" data-type="image" data-src="test/Main.jpg" data-title="Main">
+                <img src="test/Main.jpg" alt="Main"/>
+              </div>
+              <div class="thumb is-image" data-type="image" data-src="test/DirectionalMagnet.png" data-title="DirectionalMagnet">
+                <img src="test/DirectionalMagnet.png" alt="DirectionalMagnet"/>
+              </div>
+              <div class="thumb is-image" data-type="image" data-src="test/Interior_Room.png" data-title="Interior_Room">
+                <img src="test/Interior_Room.png" alt="Interior_Room"/>
+              </div>
+              <div class="thumb is-image" data-type="image" data-src="test/TrafficLIght.png" data-title="TrafficLight">
+                <img src="test/TrafficLIght.png" alt="TrafficLight"/>
+              </div>
+              <div class="thumb is-image" data-type="image" data-src="test/背景.png" data-title="背景">
+                <img src="test/背景.png" alt="背景"/>
+              </div>
             </div>
           </div>
         </div>

@@ -276,14 +276,16 @@
     .thumb.active-thumb img{opacity:.65;}
 
     /* lightbox */
-    #lightbox{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.94);
+    #lightbox{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.92);
       display:none;align-items:center;justify-content:center;cursor:zoom-out;}
     #lightbox.open{display:flex;}
-    #lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;cursor:default;}
-    #lightbox-close{position:absolute;top:24px;right:32px;
-      font-family:var(--M);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+    #lb-inner{width:min(860px,90vw);cursor:default;}
+    #lb-video{width:100%;}
+    #lb-bar{display:flex;justify-content:space-between;align-items:center;margin-top:12px;}
+    #lb-title{font-family:var(--M);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+    #lightbox-close{font-family:var(--M);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;
       color:rgba(255,255,255,.55);background:none;border:1px solid rgba(255,255,255,.25);
-      padding:8px 18px;cursor:pointer;transition:color .2s,border-color .2s;}
+      padding:7px 16px;cursor:pointer;transition:color .2s,border-color .2s;}
     #lightbox-close:hover{color:#fff;border-color:#fff;}
 
     .works-desc{font-family:var(--B);font-style:italic;font-size:.85rem;line-height:1.8;color:rgba(255,255,255,.55);}
@@ -431,53 +433,31 @@
           </div>
           <div class="p-num">02</div>
         </div>
-        <div class="works-layout">
-
-          <!-- LEFT: main player -->
-          <div class="works-main">
-            <div class="main-player" id="player-3d">
-              <iframe id="iframe-3d"
-                src="https://www.youtube.com/embed/YjGaAXRy_2k?rel=0&modestbranding=1&hd=1"
-                title="3D Works" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="grid-label">Video</div>
+          <div class="thumb-row" style="grid-template-columns:repeat(4,1fr);">
+            <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="3D Demoreel 2024">
+              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Demoreel 2024"/>
             </div>
-            <div class="main-img-wrap" id="imgview-3d" onclick="openLightbox(this.querySelector('img').src)">
-              <img id="imgview-3d-img" src="" alt=""/>
+            <div class="thumb" data-type="video" data-vid="yP8mGm5Xm2M" data-title="3D Work 2">
+              <img src="https://img.youtube.com/vi/yP8mGm5Xm2M/hqdefault.jpg" alt="Work 2"/>
             </div>
-            <div class="main-caption">
-              <span id="cap-3d">3D Demoreel 2024</span>
-              <a class="main-ext" id="ext-3d" href="https://www.youtube.com/watch?v=YjGaAXRy_2k" target="_blank" rel="noopener">Open on YouTube</a>
+            <div class="thumb" data-type="video" data-vid="eaAmaWYGxWI" data-title="3D Work 3">
+              <img src="https://img.youtube.com/vi/eaAmaWYGxWI/hqdefault.jpg" alt="Work 3"/>
             </div>
           </div>
-
-          <!-- RIGHT: video + image grid with labels -->
-          <div class="works-right">
-            <div class="grid-label">Video</div>
-            <div class="thumb-row">
-              <div class="thumb active-thumb" data-id="3d" data-type="video" data-vid="YjGaAXRy_2k" data-title="3D Demoreel 2024" data-url="https://www.youtube.com/watch?v=YjGaAXRy_2k">
-                <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Demoreel 2024"/>
-              </div>
-              <div class="thumb" data-id="3d" data-type="video" data-vid="yP8mGm5Xm2M" data-title="3D Work 2" data-url="https://www.youtube.com/watch?v=yP8mGm5Xm2M">
-                <img src="https://img.youtube.com/vi/yP8mGm5Xm2M/hqdefault.jpg" alt="Work 2"/>
-              </div>
-              <div class="thumb" data-id="3d" data-type="video" data-vid="eaAmaWYGxWI" data-title="3D Work 3" data-url="https://www.youtube.com/watch?v=eaAmaWYGxWI">
-                <img src="https://img.youtube.com/vi/eaAmaWYGxWI/hqdefault.jpg" alt="Work 3"/>
-              </div>
+          <div class="grid-label">Image</div>
+          <div class="thumb-row" style="grid-template-columns:repeat(4,1fr);">
+            <div class="thumb is-image" data-type="image" data-src="https://img.youtube.com/vi/YjGaAXRy_2k/maxresdefault.jpg" data-title="Still 01">
+              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/maxresdefault.jpg" alt="Still 01"/>
             </div>
-            <div class="grid-label">Image</div>
-            <div class="thumb-row">
-              <div class="thumb is-image" data-id="3d" data-type="image" data-src="https://img.youtube.com/vi/YjGaAXRy_2k/maxresdefault.jpg" data-title="Still 01">
-                <img src="https://img.youtube.com/vi/YjGaAXRy_2k/maxresdefault.jpg" alt="Still 01"/>
-              </div>
-              <div class="thumb is-image" data-id="3d" data-type="image" data-src="https://img.youtube.com/vi/yP8mGm5Xm2M/maxresdefault.jpg" data-title="Still 02">
-                <img src="https://img.youtube.com/vi/yP8mGm5Xm2M/maxresdefault.jpg" alt="Still 02"/>
-              </div>
-              <div class="thumb is-image" data-id="3d" data-type="image" data-src="https://img.youtube.com/vi/eaAmaWYGxWI/maxresdefault.jpg" data-title="Still 03">
-                <img src="https://img.youtube.com/vi/eaAmaWYGxWI/maxresdefault.jpg" alt="Still 03"/>
-              </div>
+            <div class="thumb is-image" data-type="image" data-src="https://img.youtube.com/vi/yP8mGm5Xm2M/maxresdefault.jpg" data-title="Still 02">
+              <img src="https://img.youtube.com/vi/yP8mGm5Xm2M/maxresdefault.jpg" alt="Still 02"/>
             </div>
-            <p class="works-desc">3D modeling, simulation, and rendering — from photoreal environments to abstract motion graphics.</p>
+            <div class="thumb is-image" data-type="image" data-src="https://img.youtube.com/vi/eaAmaWYGxWI/maxresdefault.jpg" data-title="Still 03">
+              <img src="https://img.youtube.com/vi/eaAmaWYGxWI/maxresdefault.jpg" alt="Still 03"/>
+            </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -563,9 +543,21 @@
 </div>
 
 <!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLightbox()">
-  <button id="lightbox-close" onclick="closeLightbox()">✕ Close</button>
-  <img id="lightbox-img" src="" alt=""/>
+<div id="lightbox" onclick="closeLightbox(event)">
+  <div id="lb-inner" onclick="event.stopPropagation()">
+    <!-- video player -->
+    <div id="lb-video" style="display:none;position:relative;padding-bottom:56.25%;width:100%;">
+      <iframe id="lb-iframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+        style="position:absolute;inset:0;width:100%;height:100%;border:none;"></iframe>
+    </div>
+    <!-- image viewer -->
+    <img id="lb-img" src="" alt="" style="display:none;max-width:100%;max-height:80vh;object-fit:contain;"/>
+    <!-- caption + close -->
+    <div id="lb-bar">
+      <span id="lb-title"></span>
+      <button id="lightbox-close" onclick="closeLightbox(event)">✕ Close</button>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -585,62 +577,37 @@
     document.getElementById('bstat').textContent = '— Home';
   }
 
-  // Lightbox
-  function openLightbox(src) {
-    document.getElementById('lightbox-img').src = src;
+  function openLightboxVideo(vid, title) {
+    document.getElementById('lb-iframe').src =
+      `https://www.youtube.com/embed/${vid}?rel=0&modestbranding=1&hd=1&autoplay=1`;
+    document.getElementById('lb-video').style.display = '';
+    document.getElementById('lb-img').style.display = 'none';
+    document.getElementById('lb-title').textContent = title || '';
     document.getElementById('lightbox').classList.add('open');
   }
-  function closeLightbox() {
+  function openLightbox(src, title) {
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lb-img').style.display = '';
+    document.getElementById('lb-video').style.display = 'none';
+    document.getElementById('lb-title').textContent = title || '';
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(e) {
     document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lb-iframe').src = '';
   }
   document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 
-  // Thumbnail click
+  // Thumbnail clicks
   document.querySelectorAll('.thumb').forEach(th => {
     th.addEventListener('click', () => {
-      const id    = th.dataset.id;
       const type  = th.dataset.type || 'video';
-      const title = th.dataset.title;
-
-      // active highlight — scope to parent panel
-      const panel = th.closest('.panel');
-      if(panel) panel.querySelectorAll('.thumb').forEach(t => t.classList.remove('active-thumb'));
-      th.classList.add('active-thumb');
-
-      if (!id) return;
-      const capEl = document.getElementById('cap-' + id);
-      if(capEl) capEl.textContent = title;
-
+      const title = th.dataset.title || '';
       if (type === 'video') {
-        const vid = th.dataset.vid;
-        const url = th.dataset.url;
-        const player = document.getElementById('player-' + id);
-        const iv = document.getElementById('imgview-' + id);
-        if(player) player.style.display = '';
-        if(iv) iv.style.display = 'none';
-        const iframe = document.getElementById('iframe-' + id);
-        if(iframe) iframe.src = `https://www.youtube.com/embed/${vid}?rel=0&modestbranding=1&hd=1&autoplay=1`;
-        const ext = document.getElementById('ext-' + id);
-        if(ext){ ext.href = url; ext.textContent = 'Open on YouTube'; }
+        openLightboxVideo(th.dataset.vid, title);
       } else {
-        const src = th.dataset.src;
-        const player = document.getElementById('player-' + id);
-        const iv = document.getElementById('imgview-' + id);
-        if(player) player.style.display = 'none';
-        if(iv){ iv.style.display = ''; document.getElementById('imgview-' + id + '-img').src = src; }
-        const ext = document.getElementById('ext-' + id);
-        if(ext){ ext.href = src; ext.textContent = 'Open Image'; }
-        // open lightbox immediately
-        openLightbox(src);
+        openLightbox(th.dataset.src, title);
       }
-    });
-  });
-
-  // click main image to enlarge
-  document.querySelectorAll('.main-img-wrap').forEach(el => {
-    el.addEventListener('click', () => {
-      const img = el.querySelector('img');
-      if(img && img.src) openLightbox(img.src);
     });
   });
 </script>

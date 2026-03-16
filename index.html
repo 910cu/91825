@@ -323,7 +323,17 @@
     .panel.active .phead{animation:rise .6s cubic-bezier(.16,1,.3,1) both .04s;}
     .panel.active .about-grid,.panel.active .works-layout,.panel.active .contact-grid{animation:rise .7s cubic-bezier(.16,1,.3,1) both .18s;}
 
-    @media(max-width:900px){
+    /* ═══ 3D PANEL — スクロールなしで画面内に収める ═══ */
+    #panel-3d .pic{gap:0;}
+    #panel-3d .thumb-row{
+      flex:1;min-height:0;
+    }
+    /* aspect-ratioを解除してグリッドの高さに追従させる */
+    #panel-3d .thumb{
+      aspect-ratio:unset;
+      height:100%;
+    }
+
       #ph,.pi{padding:28px 24px 36px;}
       .about-grid,.works-layout,.contact-grid{grid-template-columns:1fr;gap:24px;}
       .p-title{font-size:clamp(1.8rem,7vw,3rem);}
@@ -440,7 +450,7 @@
           </div>
           <div class="p-num">02</div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:0;flex:1;padding-right:4px;">
+        <div style="display:flex;flex-direction:column;gap:12px;flex:1;min-height:0;">
           <div class="grid-label">Video</div>
           <div class="thumb-row" style="grid-template-columns:repeat(4,1fr);">
             <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="3D Demoreel 2024" data-webm="test/preview_demoreel.webm">

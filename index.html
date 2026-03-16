@@ -325,12 +325,12 @@
 
     /* ═══ 3D PANEL — 縦並び・画面内に収める ═══ */
     .works-3d{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;}
-    /* thumb-rowがflexの残り高さを占有 */
-    #panel-3d .thumb-row{flex:1;min-height:0;}
-    /* 画像行は動画行の2倍の高さ（アイテム数が多いため） */
+    .works-3d > .grid-label{flex-shrink:0;}
+    /* thumb-rowにflexで高さを渡し、グリッドトラックをstretchで均等分割 */
+    #panel-3d .thumb-row{flex:1;min-height:0;align-content:stretch;grid-auto-rows:1fr;}
     #panel-3d #image-grid-3d{flex:2;}
-    /* aspect-ratioを解除してthumbが行の高さに追従 */
-    #panel-3d .thumb{aspect-ratio:unset;height:100%;}
+    /* aspect-ratioを解除してグリッドセルの高さに追従 */
+    #panel-3d .thumb{aspect-ratio:unset;}
 
       #ph,.pi{padding:28px 24px 36px;}
       .about-grid,.works-layout,.contact-grid{grid-template-columns:1fr;gap:24px;}
@@ -459,8 +459,8 @@
               <video class="thumb-webm" src="webm/background.webm" muted loop playsinline preload="metadata"
                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
             </div>
-            <div class="thumb" data-type="video" data-vid="eaAmaWYGxWI" data-title="3D Work 3" data-webm="test/preview_work3.webm">
-              <video class="thumb-webm" src="test/preview_work3.webm" muted loop playsinline preload="metadata"
+            <div class="thumb" data-type="video" data-vid="eaAmaWYGxWI" data-title="3D Work 3" data-webm="mp4/Paper_Composite_Film.mp4">
+              <video class="thumb-webm" src="mp4/Paper_Composite_Film.mp4" muted loop playsinline preload="metadata"
                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
             </div>
           </div>

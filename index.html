@@ -11,10 +11,10 @@
       --paper: #eeeeec;
       --mist:  rgba(238,238,236,0.55);
       --line:  rgba(238,238,236,0.09);
-      /* single accent — deep cinematic red */
-      --g:     #c0202e;
-      --g2:    #e03040;
-      --g3:    #ff5060;
+      /* accent — deep steel teal: mature, premium, corporate */
+      --g:     #1a6e82;
+      --g2:    #2a9ab8;
+      --g3:    #4abcd8;
       --D: 'Antonio', sans-serif;
       --B: 'Spectral', serif;
       --M: 'Inconsolata', monospace;
@@ -216,9 +216,9 @@
     .about-cols { display:grid; grid-template-columns:1fr 1fr; gap:52px; flex:1; min-height:0; }
     .col { display:flex; flex-direction:column; }
     .col-label {
-      font-family:var(--M); font-size:.52rem; letter-spacing:.22em; text-transform:uppercase;
-      color:rgba(184,146,74,.55); margin-bottom:18px; padding-bottom:10px;
-      border-bottom:1px solid rgba(184,146,74,.15);
+      font-family:var(--M); font-size:.55rem; letter-spacing:.22em; text-transform:uppercase;
+      color:var(--g3); margin-bottom:18px; padding-bottom:10px;
+      border-bottom:1px solid rgba(26,110,130,.25);
     }
     .bt { font-family:var(--B); font-size:.96rem; line-height:1.92; color:rgba(238,238,236,.75); margin-bottom:12px; }
 
@@ -238,14 +238,19 @@
     .slink:hover::before { transform:translateX(0); }
     .slink:hover::after { transform:translateX(3px); color:#fff; }
 
-    .sg { margin-bottom:16px; }
-    .sg-name { font-family:var(--M); font-size:.56rem; letter-spacing:.18em; text-transform:uppercase; color:var(--g); margin-bottom:10px; opacity:.85; }
-    .sg-tags { display:flex; flex-wrap:wrap; gap:6px; }
-    .sg-tag {
-      font-family:var(--M); font-size:.72rem; padding:5px 13px;
-      border:1px solid rgba(238,238,236,.1); color:rgba(238,238,236,.55); transition:all .2s;
+    .sg { margin-bottom:18px; }
+    .sg-name {
+      font-family:var(--M); font-size:.6rem; letter-spacing:.2em; text-transform:uppercase;
+      color:var(--g3); margin-bottom:10px; font-weight:400;
     }
-    .sg-tag:hover { border-color:rgba(184,146,74,.45); color:var(--g2); background:rgba(184,146,74,.06); }
+    .sg-tags { display:flex; flex-wrap:wrap; gap:7px; }
+    .sg-tag {
+      font-family:var(--M); font-size:.75rem; padding:6px 14px;
+      border:1px solid rgba(238,238,236,.22); color:rgba(238,238,236,.82);
+      background:rgba(238,238,236,.05);
+      transition:all .2s;
+    }
+    .sg-tag:hover { border-color:var(--g2); color:#fff; background:rgba(42,154,184,.12); }
 
     /* REEL */
     .reel-cols { display:grid; grid-template-columns:3fr 2fr; gap:52px; align-items:start; flex:1; min-height:0; }

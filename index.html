@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CUTEN — 3D CG Artist & Motion Designer</title>
   <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@300;400;600;700&family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=Inconsolata:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     :root {
       --void: #060606;
@@ -217,6 +218,10 @@
     .slink:hover{color:#000;border-color:#fff;}
     .slink:hover::before{transform:translateX(0);}
     .slink:hover i{opacity:1;transform:translateX(3px);}
+    /* icon-only variant */
+    .slink-icon{padding:11px 15px;}
+    .slink-icon i{font-size:1.15rem;opacity:1;}
+    .slink-icon:hover i{transform:none;}
 
     .sg{margin-bottom:22px;}
     .sg-name{
@@ -254,11 +259,11 @@
 
     /* section label */
     .grid-label{
-      font-family:var(--M);font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;
-      color:rgba(255,255,255,.42);
-      display:flex;align-items:center;gap:10px;
+      font-family:var(--M);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;
+      color:rgba(255,255,255,.7);
+      display:flex;align-items:center;gap:12px;
     }
-    .grid-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1);}
+    .grid-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.15);}
 
     /* thumbnail rows — 3 across */
     .thumb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
@@ -405,10 +410,10 @@
             <p class="bt">Experience spanning advertising, games, and film — end-to-end production from concept and modeling through rendering and compositing.</p>
             <p class="bt">Bridging photorealistic VFX and real-time CG, always prioritizing the client's creative vision.</p>
             <div class="slinks">
-              <a class="slink" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener"><span>YouTube</span><i>→</i></a>
-              <a class="slink" href="https://www.artstation.com/tajimiryo" target="_blank" rel="noopener"><span>ArtStation</span><i>→</i></a>
-              <a class="slink" href="https://www.behance.net/tajimi" target="_blank" rel="noopener"><span>Behance</span><i>→</i></a>
-              <a class="slink" href="https://x.com/lipe02x" target="_blank" rel="noopener"><span>X</span><i>→</i></a>
+              <a class="slink slink-icon" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+              <a class="slink slink-icon" href="https://www.artstation.com/tajimiryo" target="_blank" rel="noopener" title="ArtStation"><i class="fa-brands fa-artstation"></i></a>
+              <a class="slink slink-icon" href="https://www.behance.net/tajimi" target="_blank" rel="noopener" title="Behance"><i class="fa-brands fa-behance"></i></a>
+              <a class="slink slink-icon" href="https://x.com/lipe02x" target="_blank" rel="noopener" title="X / Twitter"><i class="fa-brands fa-x-twitter"></i></a>
             </div>
           </div>
           <div class="acol">

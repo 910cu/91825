@@ -492,7 +492,7 @@
           <div class="works-main">
             <div class="main-player" id="player-video">
               <iframe id="iframe-video"
-                src="https://www.youtube.com/embed/YjGaAXRy_2k?rel=0&modestbranding=1"
+                src=""
                 title="Video Works" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <div class="main-caption">
@@ -577,18 +577,44 @@
 <script>
   const labels = {about:'About','3d':'3D Works',video:'Video Works',contact:'Contact'};
 
+  const VIDEO_BASE_ID = 'YjGaAXRy_2k';
+
+  function setVideoIframe(vid, autoplay) {
+    const iframe = document.getElementById('iframe-video');
+    const params = `rel=0&modestbranding=1${autoplay ? '&autoplay=1&mute=1' : ''}`;
+    iframe.src = `https://www.youtube.com/embed/${vid}?${params}`;
+  }
+
+  function stopVideo() {
+    document.getElementById('iframe-video').src = '';
+  }
+
   function openTab(id) {
+    const prev = document.querySelector('.panel.active');
+    const wasVideo = prev && prev.id === 'panel-video';
+
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tnl').forEach(t => t.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
     document.getElementById('tab-' + id).classList.add('active');
     document.getElementById('bstat').textContent = '— ' + labels[id];
+
+    if (id === 'video') {
+      setVideoIframe(VIDEO_BASE_ID, true);
+    } else if (wasVideo) {
+      stopVideo();
+    }
   }
   function showHome() {
+    const prev = document.querySelector('.panel.active');
+    const wasVideo = prev && prev.id === 'panel-video';
+
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tnl').forEach(t => t.classList.remove('active'));
     document.getElementById('ph').classList.add('active');
     document.getElementById('bstat').textContent = '— Home';
+
+    if (wasVideo) stopVideo();
   }
 
   function openLightboxVideo(vid, title) {
@@ -617,6 +643,18 @@
     th.addEventListener('click', () => {
       const type  = th.dataset.type || 'video';
       const title = th.dataset.title || '';
+      const panelId = th.dataset.id; // 'video' for Video Works panel thumbnails
+
+      // Video Works panel: clicking thumbnail swaps main player (no lightbox)
+      if (panelId === 'video') {
+        document.querySelectorAll('#thumbs-video .thumb').forEach(t => t.classList.remove('active-thumb'));
+        th.classList.add('active-thumb');
+        document.getElementById('cap-video').textContent = title;
+        document.getElementById('ext-video').href = th.dataset.url || '#';
+        setVideoIframe(th.dataset.vid, true);
+        return;
+      }
+
       if (type === 'video') {
         openLightboxVideo(th.dataset.vid, title);
       } else {

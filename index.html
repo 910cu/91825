@@ -268,11 +268,12 @@
     /* thumbnail rows — 3 across */
     .thumb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
     .thumb{
-      position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;background:#1a1a1a;
+      position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;
       border:1px solid rgba(255,255,255,.07);transition:border-color .2s;
+      height:120px;
     }
-    .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s,opacity .3s;}
-    .thumb:hover img{transform:scale(1.06);opacity:.7;}
+    .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .3s;}
+    .thumb:hover img{opacity:.7;}
     .thumb::after{content:'▶';position:absolute;inset:0;display:flex;align-items:center;
       justify-content:center;font-size:.7rem;color:#fff;opacity:0;transition:opacity .3s;background:rgba(0,0,0,.3);}
     .thumb.is-image::after{content:'⊕';font-size:.8rem;}

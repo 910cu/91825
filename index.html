@@ -388,8 +388,9 @@
   <div class="bar-spacer"></div>
   <nav class="topnav">
     <button class="tnl" id="tab-about"    onclick="openTab('about')"><span class="tnn">01</span>About</button>
-    <button class="tnl" id="tab-demoreel" onclick="openTab('demoreel')"><span class="tnn">02</span>Demoreel</button>
-    <button class="tnl" id="tab-contact"  onclick="openTab('contact')"><span class="tnn">03</span>Contact</button>
+    <button class="tnl" id="tab-3d"       onclick="openTab('3d')"><span class="tnn">02</span>3D Works</button>
+    <button class="tnl" id="tab-video"    onclick="openTab('video')"><span class="tnn">03</span>Video Works</button>
+    <button class="tnl" id="tab-contact"  onclick="openTab('contact')"><span class="tnn">04</span>Contact</button>
   </nav>
   <div class="bar-status">
     <div class="pdot"></div>
@@ -458,14 +459,14 @@
     </div>
   </div>
 
-  <!-- DEMOREEL -->
-  <div class="panel" id="panel-demoreel">
+  <!-- 3D WORKS -->
+  <div class="panel" id="panel-3d">
     <div class="pi">
       <div class="pic">
         <div class="phead">
           <div class="phead-left">
-            <div class="p-eyebrow">Showreel</div>
-            <h2 class="p-title">3D <em>Demoreel</em></h2>
+            <div class="p-eyebrow">3D Showreel</div>
+            <h2 class="p-title">3D <em>Works</em></h2>
           </div>
           <div class="p-num">02</div>
         </div>
@@ -473,14 +474,43 @@
           <div class="vframe">
             <div class="vi">
               <div class="vr">
-                <iframe src="https://www.youtube.com/embed/YjGaAXRy_2k?list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw&rel=0&modestbranding=1" title="3D Demoreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/YjGaAXRy_2k?list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw&rel=0&modestbranding=1" title="3D Works" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
             </div>
           </div>
           <div class="reel-info">
             <div class="reel-n">02</div>
-            <p class="reel-desc">Full-pipeline production — 3D modeling and simulation through rendering and compositing. Photorealistic VFX to real-time CG across advertising, film, and games.</p>
-            <a class="yt-btn" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">View All Works on YouTube →</a>
+            <p class="reel-desc">3D modeling, simulation, and rendering — from photoreal characters and environments to abstract motion graphics. Built in Blender, Cinema 4D, Houdini, and Unreal Engine.</p>
+            <a class="yt-btn" href="https://www.youtube.com/watch?v=YjGaAXRy_2k&list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw" target="_blank" rel="noopener">View All 3D Works →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO WORKS -->
+  <div class="panel" id="panel-video">
+    <div class="pi">
+      <div class="pic">
+        <div class="phead">
+          <div class="phead-left">
+            <div class="p-eyebrow">Motion & VFX</div>
+            <h2 class="p-title">Video <em>Works</em></h2>
+          </div>
+          <div class="p-num">03</div>
+        </div>
+        <div class="reel-cols">
+          <div class="vframe">
+            <div class="vi">
+              <div class="vr">
+                <iframe src="https://www.youtube.com/embed/YjGaAXRy_2k?list=PLQKObybkcQSV3uduM128-yR18FKCl8CUw&rel=0&modestbranding=1" title="Video Works" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+            </div>
+          </div>
+          <div class="reel-info">
+            <div class="reel-n">03</div>
+            <p class="reel-desc">Motion design, compositing, and visual effects for advertising, broadcast, and film. End-to-end production in After Effects, DaVinci Resolve, and Nuke.</p>
+            <a class="yt-btn" href="https://www.youtube.com/@cuuuten6188" target="_blank" rel="noopener">View All Video Works →</a>
           </div>
         </div>
       </div>
@@ -496,7 +526,7 @@
             <div class="p-eyebrow">Enquiry</div>
             <h2 class="p-title">Get In <em>Touch</em></h2>
           </div>
-          <div class="p-num">03</div>
+          <div class="p-num">04</div>
         </div>
         <div class="contact-cols">
           <div class="c-left">
@@ -516,7 +546,7 @@
 </div>
 
 <script>
-  const labels = {about:'About', demoreel:'Demoreel', contact:'Contact'};
+  const labels = {about:'About', '3d':'3D Works', video:'Video Works', contact:'Contact'};
   function openTab(id) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tnl').forEach(t => t.classList.remove('active'));

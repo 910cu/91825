@@ -54,6 +54,7 @@
       display:flex; align-items:center; padding:0 44px;
       border-right:1px solid var(--rule); gap:18px; flex-shrink:0; height:100%;
     }
+    .bar-right-group { display:flex; align-items:stretch; margin-left:auto; height:100%; }
     .logo {
       font-family:var(--D); font-size:.95rem; font-weight:700;
       letter-spacing:.38em; color:var(--white); text-transform:uppercase;
@@ -291,14 +292,16 @@
     <div class="logo-sep"></div>
     <span class="logo-sub">3D CG &amp; Motion</span>
   </div>
-  <nav class="topnav">
-    <button class="tnl" id="tab-about"    onclick="openTab('about')"><span class="tnn">01</span>About</button>
-    <button class="tnl" id="tab-demoreel" onclick="openTab('demoreel')"><span class="tnn">02</span>Demoreel</button>
-    <button class="tnl" id="tab-contact"  onclick="openTab('contact')"><span class="tnn">03</span>Contact</button>
-  </nav>
-  <div class="bar-end">
-    <div class="pdot"></div>
-    <span class="bloc">Tokyo · JP</span>
+  <div class="bar-right-group">
+    <nav class="topnav">
+      <button class="tnl" id="tab-about"    onclick="openTab('about')"><span class="tnn">01</span>About</button>
+      <button class="tnl" id="tab-demoreel" onclick="openTab('demoreel')"><span class="tnn">02</span>Demoreel</button>
+      <button class="tnl" id="tab-contact"  onclick="openTab('contact')"><span class="tnn">03</span>Contact</button>
+    </nav>
+    <div class="bar-end">
+      <div class="pdot"></div>
+      <span class="bloc">Tokyo · JP</span>
+    </div>
   </div>
 </div>
 

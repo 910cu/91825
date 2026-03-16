@@ -273,6 +273,8 @@
     }
     .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s,opacity .3s;}
     .thumb:hover img{transform:scale(1.06);opacity:.7;}
+    .thumb video.thumb-webm{transition:transform .4s,opacity .3s;}
+    .thumb:hover video.thumb-webm{transform:scale(1.06);opacity:.7;}
     .thumb::after{content:'▶';position:absolute;inset:0;display:flex;align-items:center;
       justify-content:center;font-size:.7rem;color:#fff;opacity:0;transition:opacity .3s;background:rgba(0,0,0,.3);}
     .thumb.is-image::after{content:'⊕';font-size:.8rem;}
@@ -438,17 +440,20 @@
           </div>
           <div class="p-num">02</div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;flex-direction:column;gap:12px;overflow-y:auto;min-height:0;flex:1;padding-right:4px;">
           <div class="grid-label">Video</div>
           <div class="thumb-row" style="grid-template-columns:repeat(4,1fr);">
             <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="3D Demoreel 2024" data-webm="test/preview_demoreel.webm">
-              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Demoreel 2024"/>
+              <video class="thumb-webm" src="test/preview_demoreel.webm" muted loop playsinline preload="metadata"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
             </div>
             <div class="thumb" data-type="video" data-vid="yP8mGm5Xm2M" data-title="3D Work 2" data-webm="test/preview_work2.webm">
-              <img src="https://img.youtube.com/vi/yP8mGm5Xm2M/hqdefault.jpg" alt="Work 2"/>
+              <video class="thumb-webm" src="test/preview_work2.webm" muted loop playsinline preload="metadata"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
             </div>
             <div class="thumb" data-type="video" data-vid="eaAmaWYGxWI" data-title="3D Work 3" data-webm="test/preview_work3.webm">
-              <img src="https://img.youtube.com/vi/eaAmaWYGxWI/hqdefault.jpg" alt="Work 3"/>
+              <video class="thumb-webm" src="test/preview_work3.webm" muted loop playsinline preload="metadata"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
             </div>
           </div>
           <div class="grid-label">Image</div>
@@ -604,6 +609,18 @@
     } else if (wasVideo) {
       stopVideo();
     }
+
+    // 3Dタブを開いたらwebmを自動再生、離れたら停止
+    if (id === '3d') {
+      document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => {
+        v.currentTime = 0;
+        v.play().catch(() => {});
+      });
+    } else {
+      document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => {
+        v.pause();
+      });
+    }
   }
   function showHome() {
     const prev = document.querySelector('.panel.active');
@@ -615,6 +632,7 @@
     document.getElementById('bstat').textContent = '— Home';
 
     if (wasVideo) stopVideo();
+    document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => v.pause());
   }
 
   function openLightboxVideo(vid, title) {
@@ -638,27 +656,9 @@
   }
   document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 
-  // 3D Works thumbnails: webm hover preview
+  // 3D Works thumbnails: webm hover scale effect (video elements are always visible)
   document.querySelectorAll('#panel-3d .thumb[data-webm]').forEach(th => {
-    th.addEventListener('mouseenter', () => {
-      const video = document.createElement('video');
-      video.src = th.dataset.webm;
-      video.autoplay = true;
-      video.muted = true;
-      video.loop = true;
-      video.playsInline = true;
-      video.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;';
-      video.classList.add('thumb-preview');
-      const img = th.querySelector('img');
-      if (img) img.style.opacity = '0';
-      th.appendChild(video);
-    });
-    th.addEventListener('mouseleave', () => {
-      const video = th.querySelector('.thumb-preview');
-      if (video) { video.pause(); video.remove(); }
-      const img = th.querySelector('img');
-      if (img) img.style.opacity = '';
-    });
+    // hover effects handled via CSS (.thumb:hover video.thumb-webm)
   });
 
   // Thumbnail clicks

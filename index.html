@@ -326,11 +326,9 @@
     /* ═══ 3D PANEL — 縦並び・画面内に収める ═══ */
     .works-3d{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;}
     .works-3d > .grid-label{flex-shrink:0;}
-    /* thumb-rowにflexで高さを渡し、グリッドトラックをstretchで均等分割 */
-    #panel-3d .thumb-row{flex:1;min-height:0;align-content:stretch;grid-auto-rows:1fr;}
-    #panel-3d #image-grid-3d{flex:2;}
-    /* aspect-ratioを解除してグリッドセルの高さに追従 */
-    #panel-3d .thumb{aspect-ratio:unset;}
+    #panel-3d .thumb-row{flex-shrink:0;}
+    /* 画像は6列1行にして縦幅を最小化 */
+    #panel-3d #image-grid-3d{grid-template-columns:repeat(6,1fr) !important;}
 
       #ph,.pi{padding:28px 24px 36px;}
       .about-grid,.works-layout,.contact-grid{grid-template-columns:1fr;gap:24px;}

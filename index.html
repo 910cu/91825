@@ -268,11 +268,11 @@
     /* thumbnail rows — 3 across */
     .thumb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
     .thumb{
-      position:relative;overflow:hidden;cursor:pointer;background:#1a1a1a;
+      position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;background:#1a1a1a;
       border:1px solid rgba(255,255,255,.07);transition:border-color .2s;
     }
-    .thumb img{width:100%;height:auto;display:block;transition:opacity .3s;}
-    .thumb:hover img{opacity:.7;}
+    .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s,opacity .3s;}
+    .thumb:hover img{transform:scale(1.06);opacity:.7;}
     .thumb::after{content:'▶';position:absolute;inset:0;display:flex;align-items:center;
       justify-content:center;font-size:.7rem;color:#fff;opacity:0;transition:opacity .3s;background:rgba(0,0,0,.3);}
     .thumb.is-image::after{content:'⊕';font-size:.8rem;}
@@ -452,9 +452,12 @@
             </div>
           </div>
           <div class="grid-label">Image</div>
-          <div class="thumb-row" id="image-grid-3d" style="grid-template-columns:repeat(6,1fr);">
+          <div class="thumb-row" id="image-grid-3d" style="grid-template-columns:repeat(4,1fr);">
             <div class="thumb is-image" data-type="image" data-src="test/GothicRoom.jpg" data-title="GothicRoom">
               <img src="test/GothicRoom.jpg" alt="GothicRoom"/>
+            </div>
+            <div class="thumb is-image" data-type="image" data-src="test/Main.jpg" data-title="Main">
+              <img src="test/Main.jpg" alt="Main"/>
             </div>
             <div class="thumb is-image" data-type="image" data-src="test/DirectionalMagnet.png" data-title="DirectionalMagnet">
               <img src="test/DirectionalMagnet.png" alt="DirectionalMagnet"/>
@@ -462,11 +465,8 @@
             <div class="thumb is-image" data-type="image" data-src="test/Interior_Room.png" data-title="Interior_Room">
               <img src="test/Interior_Room.png" alt="Interior_Room"/>
             </div>
-            <div class="thumb is-image" data-type="image" data-src="test/Main.jpg" data-title="Main">
-              <img src="test/Main.jpg" alt="Main"/>
-            </div>
-            <div class="thumb is-image" data-type="image" data-src="test/TrafficLIght.png" data-title="TrafficLIght">
-              <img src="test/TrafficLIght.png" alt="TrafficLIght"/>
+            <div class="thumb is-image" data-type="image" data-src="test/TrafficLIght.png" data-title="TrafficLight">
+              <img src="test/TrafficLIght.png" alt="TrafficLight"/>
             </div>
             <div class="thumb is-image" data-type="image" data-src="test/背景.png" data-title="背景">
               <img src="test/背景.png" alt="背景"/>

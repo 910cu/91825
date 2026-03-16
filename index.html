@@ -101,28 +101,53 @@
     .h-meta-div{width:1px;height:14px;background:rgba(237,237,237,.2);}
     .h-meta-loc{font-family:var(--M);font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);}
 
-    /* THE MAIN HEADLINE — clean split layout */
+    /* THE MAIN HEADLINE */
     .h-headline{
-      display:grid;grid-template-columns:auto 1fr;gap:0 48px;align-items:end;
+      position:relative;
       animation:rise .95s cubic-bezier(.16,1,.3,1) both .18s;
     }
     .h-hl-left{display:flex;flex-direction:column;gap:0;}
     .h-word{
       font-family:var(--D);font-weight:700;text-transform:uppercase;
       font-size:clamp(4rem,9.5vw,9rem);line-height:.88;letter-spacing:-.01em;
+      display:block;
     }
-    .h-word-a{color:var(--p);}
-    .h-word-b{color:rgba(237,237,237,.22);-webkit-text-stroke:1px rgba(237,237,237,.22);}
-    .h-word-c{color:#fff;}
-    /* right side: vertical rule + descriptor */
-    .h-hl-right{
-      display:flex;align-items:flex-end;gap:20px;padding-bottom:6px;
+    .h-word-a { color:var(--p); }
+
+    /* "Storytelling" — the statement piece */
+    .h-word-b {
+      color:transparent;
+      /* wide outline stroke */
+      -webkit-text-stroke:1.5px rgba(237,237,237,.55);
+      position:relative;
+      /* glitch double */
     }
-    .h-vline{width:1px;height:72px;background:linear-gradient(180deg,transparent,rgba(237,237,237,.4));flex-shrink:0;}
-    .h-descriptor{
-      font-family:var(--B);font-style:italic;font-size:.92rem;
-      color:var(--mid);line-height:1.75;max-width:260px;
+    .h-word-b::before {
+      content:attr(data-text);
+      position:absolute; left:0; top:0;
+      color:transparent;
+      -webkit-text-stroke:1.5px rgba(237,237,237,.12);
+      transform:translate(4px,2px);
+      pointer-events:none;
     }
+    .h-word-b::after {
+      content:attr(data-text);
+      position:absolute; left:0; top:0;
+      color:transparent;
+      -webkit-text-stroke:1.5px rgba(237,237,237,.06);
+      transform:translate(-3px,-2px);
+      pointer-events:none;
+    }
+
+    .h-word-c { color:#fff; }
+
+    /* descriptor floats bottom-right of headline */
+    .h-side{
+      position:absolute; right:0; bottom:6px;
+      display:flex; align-items:flex-end; gap:16px; max-width:240px;
+    }
+    .h-vline{width:1px;height:64px;background:linear-gradient(180deg,transparent,rgba(237,237,237,.35));flex-shrink:0;}
+    .h-descriptor{font-family:var(--B);font-style:italic;font-size:.84rem;color:var(--mid);line-height:1.75;}
 
     /* CTA row */
     .h-actions{
@@ -191,14 +216,20 @@
     .slink:hover::before{transform:translateX(0);}
     .slink:hover i{opacity:1;transform:translateX(3px);}
 
-    .sg{margin-bottom:14px;}
-    .sg-name{font-family:var(--M);font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;
-      color:rgba(237,237,237,.55);margin-bottom:8px;}
+    .sg{margin-bottom:18px;}
+    .sg-name{
+      font-family:var(--M);font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;
+      color:rgba(237,237,237,.9);margin-bottom:10px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .sg-name::after{content:'';flex:1;height:1px;background:rgba(237,237,237,.1);}
     .sg-tags{display:flex;flex-wrap:wrap;gap:6px;}
-    .sg-tag{font-family:var(--M);font-size:.7rem;padding:5px 12px;
-      border:1px solid rgba(237,237,237,.16);color:rgba(237,237,237,.72);
-      background:rgba(237,237,237,.04);transition:all .2s;}
-    .sg-tag:hover{border-color:rgba(237,237,237,.5);color:#fff;background:rgba(237,237,237,.1);}
+    .sg-tag{
+      font-family:var(--M);font-size:.72rem;padding:6px 14px;
+      border:1px solid rgba(237,237,237,.25);color:rgba(237,237,237,.88);
+      background:rgba(237,237,237,.06);transition:all .2s;
+    }
+    .sg-tag:hover{border-color:rgba(237,237,237,.65);color:#fff;background:rgba(237,237,237,.14);}
 
     /* ═══ WORKS — media grid ═══ */
     .works-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0;}
@@ -319,10 +350,10 @@
       <div class="h-headline">
         <div class="h-hl-left">
           <span class="h-word h-word-a">Visual</span>
-          <span class="h-word h-word-b">Storytelling</span>
+          <span class="h-word h-word-b" data-text="Storytelling">Storytelling</span>
           <span class="h-word h-word-c">In Motion.</span>
         </div>
-        <div class="h-hl-right">
+        <div class="h-side">
           <div class="h-vline"></div>
           <p class="h-descriptor">End-to-end production — modeling, simulation, rendering, compositing. Photorealistic VFX to real-time CG.</p>
         </div>

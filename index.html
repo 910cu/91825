@@ -236,39 +236,54 @@
     /* ═══ WORKS — media grid ═══ */
     .works-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;flex:1;min-height:0;}
 
+    /* video / image toggle tabs */
+    .works-tabs{display:flex;gap:3px;margin-bottom:14px;}
+    .wtab{
+      font-family:var(--M);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+      color:rgba(255,255,255,.55);background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.15);
+      padding:8px 22px;cursor:pointer;transition:color .2s,background .2s,border-color .2s;
+    }
+    .wtab:hover{color:rgba(255,255,255,.9);background:rgba(255,255,255,.1);}
+    .wtab.wactive{color:#fff;background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.45);}
+
     /* featured (large) player */
-    .works-main{display:flex;flex-direction:column;gap:12px;}
+    .works-main{display:flex;flex-direction:column;gap:10px;}
     .main-player{position:relative;padding-bottom:56.25%;overflow:hidden;background:#111;flex-shrink:0;}
     .main-player iframe{position:absolute;inset:0;width:100%;height:100%;border:none;}
-    .main-caption{font-family:var(--M);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;
-      color:rgba(237,237,237,.35);display:flex;justify-content:space-between;align-items:center;}
-    .main-ext{font-family:var(--M);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;
-      text-decoration:none;color:rgba(237,237,237,.38);display:flex;align-items:center;gap:6px;
+    .main-img-wrap{position:relative;padding-bottom:56.25%;overflow:hidden;background:#111;flex-shrink:0;display:none;}
+    .main-img-wrap img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;}
+    .main-caption{font-family:var(--M);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;
+      color:rgba(255,255,255,.58);display:flex;justify-content:space-between;align-items:center;}
+    .main-ext{font-family:var(--M);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;
+      text-decoration:none;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;
       transition:color .2s;}
     .main-ext::after{content:'↗';font-size:.55rem;}
     .main-ext:hover{color:#fff;}
 
     /* thumbnail grid */
-    .works-grid{display:flex;flex-direction:column;gap:0;overflow:hidden;}
-    .thumb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;flex:1;}
+    .thumb-row{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
     .thumb{
-      position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;
-      background:#111;
+      position:relative;aspect-ratio:16/9;overflow:hidden;cursor:pointer;background:#1a1a1a;
+      border:1px solid rgba(255,255,255,.07);
     }
     .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
       transition:transform .4s ease,opacity .3s;}
-    .thumb:hover img{transform:scale(1.05);opacity:.75;}
+    .thumb:hover img{transform:scale(1.05);opacity:.7;}
     .thumb::after{content:'▶';position:absolute;inset:0;display:flex;align-items:center;
-      justify-content:center;font-size:.9rem;color:#fff;
+      justify-content:center;font-size:.85rem;color:#fff;
       opacity:0;transition:opacity .3s;background:rgba(0,0,0,.3);}
+    .thumb.is-image::after{content:'🔍';font-size:.75rem;}
     .thumb:hover::after{opacity:1;}
-    .thumb.active-thumb{outline:1px solid rgba(237,237,237,.6);}
-    .thumb.active-thumb::after{opacity:1;background:rgba(0,0,0,.5);}
-    .thumb.active-thumb img{opacity:.6;}
+    .thumb.active-thumb{border-color:rgba(255,255,255,.6);outline:none;}
+    .thumb.active-thumb::after{opacity:1;background:rgba(0,0,0,.45);}
+    .thumb.active-thumb img{opacity:.7;}
 
-    /* works desc side */
-    .works-right{display:flex;flex-direction:column;gap:16px;padding-left:4px;}
-    .works-desc{font-family:var(--B);font-style:italic;font-size:.88rem;line-height:1.85;color:rgba(237,237,237,.62);}
+    /* image grid (still works) */
+    .img-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;}
+    .img-grid .thumb::after{content:'🔍';}
+
+    .works-desc{font-family:var(--B);font-style:italic;font-size:.88rem;line-height:1.85;color:rgba(255,255,255,.62);}
 
     /* ═══ CONTACT ═══ */
     .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;flex:1;align-items:start;}
@@ -414,38 +429,62 @@
           <div class="p-num">02</div>
         </div>
         <div class="works-layout">
+          <!-- LEFT: main viewer -->
           <div class="works-main">
             <div class="main-player" id="player-3d">
               <iframe id="iframe-3d"
-                src="https://www.youtube.com/embed/YjGaAXRy_2k?rel=0&modestbranding=1"
+                src="https://www.youtube.com/embed/YjGaAXRy_2k?rel=0&modestbranding=1&hd=1"
                 title="3D Works" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
+            <div class="main-img-wrap" id="imgview-3d">
+              <img id="imgview-3d-img" src="" alt=""/>
+            </div>
             <div class="main-caption">
-              <span id="cap-3d">3D Demoreel — Showreel 2024</span>
+              <span id="cap-3d">3D Demoreel 2024</span>
               <a class="main-ext" id="ext-3d" href="https://www.youtube.com/watch?v=YjGaAXRy_2k" target="_blank" rel="noopener">Open on YouTube</a>
             </div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div class="thumb-row" id="thumbs-3d">
-              <div class="thumb active-thumb" data-id="3d" data-vid="YjGaAXRy_2k" data-title="3D Demoreel 2024" data-url="https://www.youtube.com/watch?v=YjGaAXRy_2k">
-                <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="3D Demoreel 2024"/>
-              </div>
-              <div class="thumb" data-id="3d" data-vid="yP8mGm5Xm2M" data-title="3D Demoreel 2024 — Part 2" data-url="https://www.youtube.com/watch?v=yP8mGm5Xm2M">
-                <img src="https://img.youtube.com/vi/yP8mGm5Xm2M/hqdefault.jpg" alt="Work 2"/>
-              </div>
-              <div class="thumb" data-id="3d" data-vid="eaAmaWYGxWI" data-title="3D Work — eaAmaWYGxWI" data-url="https://www.youtube.com/watch?v=eaAmaWYGxWI">
-                <img src="https://img.youtube.com/vi/eaAmaWYGxWI/hqdefault.jpg" alt="3D Work"/>
-              </div>
-              <div class="thumb" data-id="3d" data-vid="YjGaAXRy_2k" data-title="VFX Simulation" data-url="https://www.youtube.com/watch?v=YjGaAXRy_2k">
-                <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Work 4"/>
-              </div>
-              <div class="thumb" data-id="3d" data-vid="YjGaAXRy_2k" data-title="Character Render" data-url="https://www.youtube.com/watch?v=YjGaAXRy_2k">
-                <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Work 5"/>
-              </div>
-              <div class="thumb" data-id="3d" data-vid="YjGaAXRy_2k" data-title="Environment Art" data-url="https://www.youtube.com/watch?v=YjGaAXRy_2k">
-                <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Work 6"/>
+
+          <!-- RIGHT: tabs + grid -->
+          <div style="display:flex;flex-direction:column;gap:10px;min-height:0;">
+            <div class="works-tabs">
+              <button class="wtab wactive" id="wtab-video-3d" onclick="switchWorksTab('3d','video')">▶ Video</button>
+              <button class="wtab" id="wtab-image-3d" onclick="switchWorksTab('3d','image')" style="margin-left:20px;">⬜ Images</button>
+            </div>
+
+            <!-- VIDEO thumbnails -->
+            <div id="grid-video-3d">
+              <div class="thumb-row">
+                <div class="thumb active-thumb" data-id="3d" data-type="video" data-vid="YjGaAXRy_2k" data-title="3D Demoreel 2024" data-url="https://www.youtube.com/watch?v=YjGaAXRy_2k">
+                  <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Demoreel 2024"/>
+                </div>
+                <div class="thumb" data-id="3d" data-type="video" data-vid="yP8mGm5Xm2M" data-title="3D Work 2" data-url="https://www.youtube.com/watch?v=yP8mGm5Xm2M">
+                  <img src="https://img.youtube.com/vi/yP8mGm5Xm2M/hqdefault.jpg" alt="Work 2"/>
+                </div>
+                <div class="thumb" data-id="3d" data-type="video" data-vid="eaAmaWYGxWI" data-title="3D Work 3" data-url="https://www.youtube.com/watch?v=eaAmaWYGxWI">
+                  <img src="https://img.youtube.com/vi/eaAmaWYGxWI/hqdefault.jpg" alt="Work 3"/>
+                </div>
               </div>
             </div>
+
+            <!-- IMAGE thumbnails (hidden by default) -->
+            <div id="grid-image-3d" style="display:none;">
+              <div class="img-grid">
+                <div class="thumb is-image" data-id="3d" data-type="image" data-src="https://img.youtube.com/vi/YjGaAXRy_2k/maxresdefault.jpg" data-title="Still 01">
+                  <img src="https://img.youtube.com/vi/YjGaAXRy_2k/maxresdefault.jpg" alt="Still 01"/>
+                </div>
+                <div class="thumb is-image" data-id="3d" data-type="image" data-src="https://img.youtube.com/vi/yP8mGm5Xm2M/maxresdefault.jpg" data-title="Still 02">
+                  <img src="https://img.youtube.com/vi/yP8mGm5Xm2M/maxresdefault.jpg" alt="Still 02"/>
+                </div>
+                <div class="thumb is-image" data-id="3d" data-type="image" data-src="https://img.youtube.com/vi/eaAmaWYGxWI/maxresdefault.jpg" data-title="Still 03">
+                  <img src="https://img.youtube.com/vi/eaAmaWYGxWI/maxresdefault.jpg" alt="Still 03"/>
+                </div>
+              </div>
+              <p style="font-family:var(--M);font-size:.5rem;letter-spacing:.12em;color:rgba(255,255,255,.3);margin-top:8px;">
+                ※ 静止画は実際の作品ファイルに差し替えてください
+              </p>
+            </div>
+
             <p class="works-desc">3D modeling, simulation, and rendering — from photoreal environments to abstract motion graphics. Built in Blender, Cinema 4D, Houdini, and Unreal Engine.</p>
           </div>
         </div>
@@ -549,24 +588,55 @@
     document.getElementById('bstat').textContent = '— Home';
   }
 
-  // Thumbnail click — swap main player
+  // Video / Image tab switch
+  function switchWorksTab(panelId, mode) {
+    const vGrid = document.getElementById('grid-video-' + panelId);
+    const iGrid = document.getElementById('grid-image-' + panelId);
+    const vTab  = document.getElementById('wtab-video-' + panelId);
+    const iTab  = document.getElementById('wtab-image-' + panelId);
+    if (mode === 'video') {
+      vGrid.style.display = ''; iGrid.style.display = 'none';
+      vTab.classList.add('wactive'); iTab.classList.remove('wactive');
+      document.getElementById('player-' + panelId).style.display = '';
+      const iv = document.getElementById('imgview-' + panelId);
+      if (iv) iv.style.display = 'none';
+    } else {
+      vGrid.style.display = 'none'; iGrid.style.display = '';
+      vTab.classList.remove('wactive'); iTab.classList.add('wactive');
+    }
+  }
+
+  // Thumbnail click
   document.querySelectorAll('.thumb').forEach(th => {
     th.addEventListener('click', () => {
       const id    = th.dataset.id;
-      const vid   = th.dataset.vid;
+      const type  = th.dataset.type || 'video';
       const title = th.dataset.title;
-      const url   = th.dataset.url;
-
-      // update iframe
-      document.getElementById('iframe-' + id).src =
-        `https://www.youtube.com/embed/${vid}?rel=0&modestbranding=1&autoplay=1`;
-      // update caption
-      document.getElementById('cap-' + id).textContent = title;
-      document.getElementById('ext-' + id).href = url;
-
-      // active state
-      document.querySelectorAll(`.thumb[data-id="${id}"]`).forEach(t => t.classList.remove('active-thumb'));
+      const grid  = th.closest('[id^="grid-"]');
+      grid.querySelectorAll('.thumb').forEach(t => t.classList.remove('active-thumb'));
       th.classList.add('active-thumb');
+      document.getElementById('cap-' + id).textContent = title;
+
+      if (type === 'video') {
+        const vid = th.dataset.vid;
+        const url = th.dataset.url;
+        document.getElementById('player-' + id).style.display = '';
+        const iv = document.getElementById('imgview-' + id);
+        if (iv) iv.style.display = 'none';
+        // HD quality params
+        document.getElementById('iframe-' + id).src =
+          `https://www.youtube.com/embed/${vid}?rel=0&modestbranding=1&hd=1&autoplay=1`;
+        document.getElementById('ext-' + id).href = url;
+        document.getElementById('ext-' + id).textContent = 'Open on YouTube';
+      } else {
+        const src = th.dataset.src;
+        document.getElementById('player-' + id).style.display = 'none';
+        const iv = document.getElementById('imgview-' + id);
+        iv.style.display = '';
+        document.getElementById('imgview-' + id + '-img').src = src;
+        document.getElementById('ext-' + id).href = src;
+        document.getElementById('ext-' + id).textContent = 'Open Image';
+      }
     });
   });
 </script>

@@ -638,6 +638,31 @@
   }
   document.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
 
+  // 3D Works video thumbnails: hover to preview
+  document.querySelectorAll('#panel-3d .thumb[data-type="video"]').forEach(th => {
+    let hoverTimer;
+    th.addEventListener('mouseenter', () => {
+      hoverTimer = setTimeout(() => {
+        const vid = th.dataset.vid;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${vid}?autoplay=1&mute=1&controls=0&loop=1&playlist=${vid}&rel=0&modestbranding=1&showinfo=0`;
+        iframe.allow = 'autoplay; encrypted-media';
+        iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;pointer-events:none;';
+        iframe.classList.add('thumb-preview');
+        const img = th.querySelector('img');
+        if (img) img.style.opacity = '0';
+        th.appendChild(iframe);
+      }, 300);
+    });
+    th.addEventListener('mouseleave', () => {
+      clearTimeout(hoverTimer);
+      const iframe = th.querySelector('.thumb-preview');
+      if (iframe) iframe.remove();
+      const img = th.querySelector('img');
+      if (img) img.style.opacity = '';
+    });
+  });
+
   // Thumbnail clicks
   document.querySelectorAll('.thumb').forEach(th => {
     th.addEventListener('click', () => {

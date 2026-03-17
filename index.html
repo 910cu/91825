@@ -326,9 +326,9 @@
     /* ═══ 3D PANEL — 縦並び・画面内に収める ═══ */
     .works-3d{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;}
     .works-3d > .grid-label{flex-shrink:0;}
-    #panel-3d .thumb-row{flex-shrink:0;}
-    /* 画像は6列1行にして縦幅を最小化 */
-    #panel-3d #image-grid-3d{grid-template-columns:repeat(6,1fr) !important;}
+    #panel-3d .thumb-row, #panel-video .thumb-row{flex-shrink:0;}
+    /* 画像・動画は6列1行にして縦幅を最小化 */
+    #panel-3d #image-grid-3d, #panel-video #thumbs-video{grid-template-columns:repeat(6,1fr) !important;}
 
       #ph,.pi{padding:28px 24px 36px;}
       .about-grid,.works-layout,.contact-grid{grid-template-columns:1fr;gap:24px;}
@@ -500,29 +500,31 @@
           <div class="p-num">03</div>
         </div>
         <div class="works-3d">
-          <div class="grid-label">Featured</div>
-          <div class="main-player" style="flex-shrink:0;">
-            <video id="video-main-player" src="mp4/Timeline 1.mp4" controls style="position:absolute;inset:0;width:100%;height:100%;background:#000;"></video>
-          </div>
           <div class="grid-label">Video</div>
-          <div class="thumb-row" id="thumbs-video" style="grid-template-columns:repeat(6,1fr);">
-            <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="Motion Design Reel 2024">
-              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Motion Reel"/>
+          <div class="thumb-row" id="thumbs-video">
+            <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="Timeline 1">
+              <video class="thumb-webm" src="mp4/Timeline 1.mp4" muted loop playsinline preload="metadata"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
             </div>
             <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="VFX Compositing">
-              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="VFX"/>
+              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="VFX"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
             </div>
             <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="Commercial Spot">
-              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Commercial"/>
+              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Commercial"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
             </div>
             <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="Title Sequence">
-              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Title"/>
+              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Title"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
             </div>
             <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="Broadcast Package">
-              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Broadcast"/>
+              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Broadcast"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
             </div>
             <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="Music Video VFX">
-              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Music Video"/>
+              <img src="https://img.youtube.com/vi/YjGaAXRy_2k/hqdefault.jpg" alt="Music Video"
+                style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;"/>
             </div>
           </div>
         </div>

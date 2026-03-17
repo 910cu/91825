@@ -608,9 +608,9 @@
     document.getElementById('bstat').textContent = '— ' + labels[id];
 
     if (id === 'video') {
-      setVideoIframe(VIDEO_BASE_ID, true);
+      // (旧iframeプレーヤーは削除済み)
     } else if (wasVideo) {
-      stopVideo();
+      // (旧iframeプレーヤーは削除済み)
     }
 
     // 3Dタブを開いたらwebmを自動再生、離れたら停止
@@ -650,7 +650,6 @@
     document.getElementById('ph').classList.add('active');
     document.getElementById('bstat').textContent = '— Home';
 
-    if (wasVideo) stopVideo();
     document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => v.pause());
     document.querySelectorAll('#panel-video .thumb-webm').forEach(v => v.pause());
   }

@@ -615,25 +615,28 @@
 
     // 3Dタブを開いたらwebmを自動再生、離れたら停止
     if (id === '3d') {
-      setTimeout(() => {
+      const p3d = document.getElementById('panel-3d');
+      const play3d = () => {
         document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => {
-          v.currentTime = 0;
-          v.play().catch(() => {});
+          v.muted = true; v.currentTime = 0; v.play().catch(() => {});
         });
-      }, 100);
+        p3d.removeEventListener('transitionend', play3d);
+      };
+      p3d.addEventListener('transitionend', play3d);
     } else {
       document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => v.pause());
     }
 
     // VIDEOタブを開いたらmp4を自動再生、離れたら停止
     if (id === 'video') {
-      setTimeout(() => {
+      const pvid = document.getElementById('panel-video');
+      const playVid = () => {
         document.querySelectorAll('#panel-video .thumb-webm').forEach(v => {
-          v.muted = true;
-          v.currentTime = 0;
-          v.play().catch(() => {});
+          v.muted = true; v.currentTime = 0; v.play().catch(() => {});
         });
-      }, 100);
+        pvid.removeEventListener('transitionend', playVid);
+      };
+      pvid.addEventListener('transitionend', playVid);
     } else {
       document.querySelectorAll('#panel-video .thumb-webm').forEach(v => v.pause());
     }

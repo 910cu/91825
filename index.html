@@ -502,7 +502,7 @@
         <div class="works-3d">
           <div class="grid-label">Video</div>
           <div class="thumb-row" id="thumbs-video">
-            <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="Timeline 1">
+            <div class="thumb" data-type="video" data-vid="YjGaAXRy_2k" data-title="Timeline 1" style="aspect-ratio:9/16;">
               <video class="thumb-webm" src="mp4/Timeline 1.mp4" muted loop playsinline preload="metadata"
                 style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;transition:transform .4s,opacity .3s;"></video>
             </div>
@@ -616,9 +616,17 @@
         v.play().catch(() => {});
       });
     } else {
-      document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => {
-        v.pause();
+      document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => v.pause());
+    }
+
+    // VIDEOタブを開いたらmp4を自動再生、離れたら停止
+    if (id === 'video') {
+      document.querySelectorAll('#panel-video .thumb-webm').forEach(v => {
+        v.currentTime = 0;
+        v.play().catch(() => {});
       });
+    } else {
+      document.querySelectorAll('#panel-video .thumb-webm').forEach(v => v.pause());
     }
   }
   function showHome() {
@@ -632,6 +640,7 @@
 
     if (wasVideo) stopVideo();
     document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => v.pause());
+    document.querySelectorAll('#panel-video .thumb-webm').forEach(v => v.pause());
   }
 
   function openLightboxVideo(vid, title) {

@@ -629,6 +629,7 @@
     if (id === 'video') {
       setTimeout(() => {
         document.querySelectorAll('#panel-video .thumb-webm').forEach(v => {
+          v.muted = true;
           v.currentTime = 0;
           v.play().catch(() => {});
         });

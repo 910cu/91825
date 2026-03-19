@@ -337,23 +337,24 @@
     #panel-3d .video-section, #panel-video .video-section{display:flex;flex-direction:column;gap:2px;flex-shrink:0;}
     #panel-3d .thumb-row, #panel-video .thumb-row{display:flex;gap:4px;flex-shrink:0;}
 
-    /* ── 3D WORKS ── */
-    /* Video行: 横動画16:9、高さ約33% */
+    /* ── 3D WORKS: 3行均等・スクロールなし ── */
+    /* 利用可能高さ = 100vh - 固定要素合計
+       固定: topbar64 + bottombar34 + pi上下padding40 + phead約55px
+             + works-3d gap(8px×2) + section内gap(2px×3) + label高さ(14px×3) = 約275px
+       各行に 1/3 を割り当て */
     #video-row-3d .thumb{
       aspect-ratio:16/9 !important;
-      height:calc((100vh - 64px - 34px - 20px - 20px - 8px*3 - 2px*4 - 1.4rem*4) * 0.33);
+      height:var(--thumb-h-3d, 30vh);
       flex-shrink:0; position:relative; width:auto;
     }
-    /* Image Horizontal行: 横画像16:9、高さ約33% */
     #image-grid-horizontal .thumb{
       aspect-ratio:16/9 !important;
-      height:calc((100vh - 64px - 34px - 20px - 20px - 8px*3 - 2px*4 - 1.4rem*4) * 0.33);
+      height:var(--thumb-h-3d, 30vh);
       flex-shrink:0; position:relative; width:auto;
     }
-    /* Image Vertical行: 縦画像9:16、高さ約33% */
     #image-grid-vertical .thumb{
       aspect-ratio:9/16 !important;
-      height:calc((100vh - 64px - 34px - 20px - 20px - 8px*3 - 2px*4 - 1.4rem*4) * 0.33);
+      height:var(--thumb-h-3d, 30vh);
       flex-shrink:0; position:relative; width:auto;
     }
 
@@ -647,6 +648,36 @@
     document.getElementById('iframe-video').src = '';
   }
 
+  /* 3D WORKSのサムネイル高さをJSで動的計算 */
+  function update3dThumbHeight() {
+    const panel = document.getElementById('panel-3d');
+    const pic   = panel.querySelector('.pic');
+    const phead = panel.querySelector('.phead');
+    const wks   = panel.querySelector('.works-3d');
+    const labels = panel.querySelectorAll('.grid-label');
+    const sections = panel.querySelectorAll('.video-section');
+
+    const picH   = pic.getBoundingClientRect().height;
+    const pheadH = phead.getBoundingClientRect().height;
+    // works-3dのgap (8px) * (sections数-1)
+    const wksGapTotal = 8 * (sections.length - 1);
+    // 各sectionのgap (2px) * sections数
+    const secGapTotal = 2 * sections.length;
+    // labelの高さ合計
+    let labelH = 0;
+    labels.forEach(l => labelH += l.getBoundingClientRect().height);
+
+    const avail = picH - pheadH - wksGapTotal - secGapTotal - labelH;
+    const thumbH = Math.floor(avail / sections.length);
+    panel.style.setProperty('--thumb-h-3d', thumbH + 'px');
+  }
+
+  window.addEventListener('resize', () => {
+    if (document.getElementById('panel-3d').classList.contains('active')) {
+      update3dThumbHeight();
+    }
+  });
+
   function openTab(id) {
     const prev = document.querySelector('.panel.active');
     const wasVideo = prev && prev.id === 'panel-video';
@@ -670,6 +701,7 @@
         document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => {
           v.muted = true; v.currentTime = 0; v.play().catch(() => {});
         });
+        update3dThumbHeight();
         p3d.removeEventListener('transitionend', play3d);
       };
       p3d.addEventListener('transitionend', play3d);

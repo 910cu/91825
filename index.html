@@ -77,8 +77,8 @@
 
     /* ═══ STAGE ═══ */
     #stage{position:fixed;inset:64px 0 34px;z-index:10;}
-    .panel{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .55s ease;display:flex;}
-    .panel.active{opacity:1;pointer-events:all;}
+    .panel{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .55s ease,visibility .55s ease;display:flex;}
+    .panel.active{opacity:1;visibility:visible;pointer-events:all;}
 
     /* ═══ HOME ═══ */
     #ph{flex-direction:column;justify-content:flex-end;padding:0 72px 64px;}
@@ -649,25 +649,26 @@
   /* VIDEO WORKSのサムネイル高さをJSで動的計算 */
   function updateVideoThumbHeight() {
     const panel    = document.getElementById('panel-video');
-    const pic      = panel.querySelector('.pic');
-    const phead    = panel.querySelector('.phead');
     const sections = panel.querySelectorAll('.video-section');
-    const lbls     = panel.querySelectorAll('.grid-label');
+    const n        = sections.length; // 2
 
-    const picH        = pic.getBoundingClientRect().height;
-    const pheadH      = phead.getBoundingClientRect().height;
-    const wksGapTotal = 8 * (sections.length - 1);
-    const secGapTotal = 2 * sections.length;
-    let labelH = 0;
-    lbls.forEach(l => labelH += l.getBoundingClientRect().height);
+    // ステージ高さ (topbar:64 + bottombar:34)
+    const stageH = window.innerHeight - 64 - 34;
+    // .pi padding top+bottom = 20+20
+    const piH = stageH - 40;
+    // phead: title line-height≒1.0 × clamp font + padding-bottom:8 + margin-bottom:8 + border:1
+    // clamp(1.2rem,2.4vw,2.2rem) → 実用的に 2.2rem = 約35px として計算
+    const pheadH = 35 + 8 + 8 + 1 + 14; // title + pb + mb + border + p-eye行
+    // works-3d gap: 8px × (n-1)
+    const wksGap = 8 * (n - 1);
+    // 各section内のgap(label→row): 2px × n
+    const secGap = 2 * n;
+    // grid-label: 0.65rem ≒ 10px + padding 2px×2 = 14px、n行分
+    const labelH = 14 * n;
 
-    const avail = picH - pheadH - wksGapTotal - secGapTotal - labelH;
+    const avail = piH - pheadH - wksGap - secGap - labelH;
 
-    // 縦(9:16)と横(16:9)の自然な高さ比を維持しながら合計をavailに収める
-    // 縦サムネイル幅 = h_v * (9/16)、横サムネイル幅 = h_h * (16/9)
-    // ここでは高さ比 9:16 → 縦:横 = 16:9 の逆数比で分割
-    // 縦section高さ : 横section高さ = 16 : 9 (縦動画は細いので多く高さを使える)
-    const total = 16 + 9;
+    const total  = 16 + 9;
     const thumbV = Math.floor(avail * 16 / total);
     const thumbH = Math.floor(avail * 9  / total);
 
@@ -699,29 +700,23 @@
 
     // 3Dタブを開いたらwebmを自動再生、離れたら停止
     if (id === '3d') {
-      const p3d = document.getElementById('panel-3d');
-      const play3d = () => {
+      requestAnimationFrame(() => {
         document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => {
           v.muted = true; v.currentTime = 0; v.play().catch(() => {});
         });
-        p3d.removeEventListener('transitionend', play3d);
-      };
-      p3d.addEventListener('transitionend', play3d);
+      });
     } else {
       document.querySelectorAll('#panel-3d .thumb-webm').forEach(v => v.pause());
     }
 
     // VIDEOタブを開いたらmp4を自動再生、離れたら停止
     if (id === 'video') {
-      const pvid = document.getElementById('panel-video');
-      const playVid = () => {
+      updateVideoThumbHeight();
+      requestAnimationFrame(() => {
         document.querySelectorAll('#panel-video .thumb-webm').forEach(v => {
           v.muted = true; v.currentTime = 0; v.play().catch(() => {});
         });
-        updateVideoThumbHeight();
-        pvid.removeEventListener('transitionend', playVid);
-      };
-      pvid.addEventListener('transitionend', playVid);
+      });
     } else {
       document.querySelectorAll('#panel-video .thumb-webm').forEach(v => v.pause());
     }

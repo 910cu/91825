@@ -329,22 +329,34 @@
     #panel-3d .thumb-row{flex-shrink:0;}
     #panel-3d #image-grid-3d{grid-template-columns:repeat(6,1fr) !important;}
 
-    /* ═══ VIDEO WORKS — 高さ基準で全収まり ═══ */
+    /* ═══ VIDEO WORKS — 比率遵守・高さ可変 ═══ */
     #panel-video .pi{padding:20px 72px 20px;}
     #panel-video .phead{padding-bottom:8px;margin-bottom:8px;}
     #panel-video .p-title{font-size:clamp(1.2rem,2.4vw,2.2rem);}
     #panel-video .p-num{font-size:2rem;}
     #panel-video .works-3d{
-      display:flex;flex-direction:column;gap:0;flex:1;min-height:0;overflow:hidden;
+      display:flex;flex-direction:column;gap:8px;flex:1;min-height:0;overflow:hidden;
     }
-    #panel-video .grid-label{flex-shrink:0;font-size:.65rem;padding:4px 0;}
-    #panel-video .video-section{display:flex;flex-direction:column;min-height:0;}
-    #panel-video .video-section.vertical-section{flex:9;}
-    #panel-video .video-section.horizontal-section{flex:5.6;}
-    #panel-video .thumb-row{display:grid;gap:4px;flex:1;min-height:0;}
-    #thumbs-video-vertical{grid-template-columns:repeat(2,1fr);}
-    #thumbs-video-horizontal{grid-template-columns:repeat(1,1fr);}
-    #panel-video .thumb{aspect-ratio:unset !important;position:relative;height:100%;width:100%;}
+    #panel-video .grid-label{flex-shrink:0;font-size:.65rem;padding:2px 0;}
+    #panel-video .video-section{display:flex;flex-direction:column;gap:2px;flex-shrink:0;}
+    /* thumb-row: thumbs並べるだけ、高さはthumb自身が決める */
+    #panel-video .thumb-row{display:flex;gap:4px;flex-shrink:0;}
+    /* 縦動画: 9:16。高さ = ビューポート高さから固定要素を引いた残りの約55% */
+    #thumbs-video-vertical .thumb{
+      aspect-ratio:9/16 !important;
+      height:calc((100vh - 64px - 34px - 20px - 20px - 8px - 8px - 2px - 2px - 1.4rem - 1.4rem) * 0.55);
+      flex-shrink:0;
+      position:relative;
+      width:auto;
+    }
+    /* 横動画: 16:9。高さ = 残りの約35% */
+    #thumbs-video-horizontal .thumb{
+      aspect-ratio:16/9 !important;
+      height:calc((100vh - 64px - 34px - 20px - 20px - 8px - 8px - 2px - 2px - 1.4rem - 1.4rem) * 0.35);
+      flex-shrink:0;
+      position:relative;
+      width:auto;
+    }
 
       #ph,.pi{padding:28px 24px 36px;}
       .about-grid,.works-layout,.contact-grid{grid-template-columns:1fr;gap:24px;}

@@ -344,31 +344,29 @@
        各行に 1/3 を割り当て */
     #video-row-3d .thumb{
       aspect-ratio:16/9 !important;
-      height:var(--thumb-h-3d, 30vh);
+      height:var(--thumb-h-3d-landscape, 25vh);
       flex-shrink:0; position:relative; width:auto;
     }
     #image-grid-horizontal .thumb{
       aspect-ratio:16/9 !important;
-      height:var(--thumb-h-3d, 30vh);
+      height:var(--thumb-h-3d-landscape, 25vh);
       flex-shrink:0; position:relative; width:auto;
     }
     #image-grid-vertical .thumb{
       aspect-ratio:9/16 !important;
-      height:var(--thumb-h-3d, 30vh);
+      height:var(--thumb-h-3d-portrait, 25vh);
       flex-shrink:0; position:relative; width:auto;
     }
 
-    /* ── VIDEO WORKS ── */
-    /* 縦動画: 9:16、高さ約55% */
+    /* ── VIDEO WORKS: JSで動的計算 ── */
     #thumbs-video-vertical .thumb{
       aspect-ratio:9/16 !important;
-      height:calc((100vh - 64px - 34px - 20px - 20px - 8px*2 - 2px*2 - 1.4rem*2) * 0.55);
+      height:var(--thumb-h-video-v, 40vh);
       flex-shrink:0; position:relative; width:auto;
     }
-    /* 横動画: 16:9、高さ約35% */
     #thumbs-video-horizontal .thumb{
       aspect-ratio:16/9 !important;
-      height:calc((100vh - 64px - 34px - 20px - 20px - 8px*2 - 2px*2 - 1.4rem*2) * 0.35);
+      height:var(--thumb-h-video-h, 25vh);
       flex-shrink:0; position:relative; width:auto;
     }
 
@@ -648,33 +646,69 @@
     document.getElementById('iframe-video').src = '';
   }
 
-  /* 3D WORKSのサムネイル高さをJSで動的計算 */
+  /* 3D WORKSのサムネイル高さをJSで動的計算 (VIDEO WORKSと同方式) */
   function update3dThumbHeight() {
-    const panel = document.getElementById('panel-3d');
-    const pic   = panel.querySelector('.pic');
-    const phead = panel.querySelector('.phead');
-    const wks   = panel.querySelector('.works-3d');
-    const labels = panel.querySelectorAll('.grid-label');
+    const panel    = document.getElementById('panel-3d');
+    const pic      = panel.querySelector('.pic');
+    const phead    = panel.querySelector('.phead');
     const sections = panel.querySelectorAll('.video-section');
+    const lbls     = panel.querySelectorAll('.grid-label');
 
-    const picH   = pic.getBoundingClientRect().height;
-    const pheadH = phead.getBoundingClientRect().height;
-    // works-3dのgap (8px) * (sections数-1)
+    const picH        = pic.getBoundingClientRect().height;
+    const pheadH      = phead.getBoundingClientRect().height;
     const wksGapTotal = 8 * (sections.length - 1);
-    // 各sectionのgap (2px) * sections数
     const secGapTotal = 2 * sections.length;
-    // labelの高さ合計
     let labelH = 0;
-    labels.forEach(l => labelH += l.getBoundingClientRect().height);
+    lbls.forEach(l => labelH += l.getBoundingClientRect().height);
 
     const avail = picH - pheadH - wksGapTotal - secGapTotal - labelH;
-    const thumbH = Math.floor(avail / sections.length);
-    panel.style.setProperty('--thumb-h-3d', thumbH + 'px');
+
+    // 3セクション: 横動画(16:9) / 横画像(16:9) / 縦画像(9:16)
+    // 横2行 + 縦1行。縦の高さ比 = 9/16、横の高さ比 = 16/9 の逆数
+    // 合計比: 16+16+9 = 41 で分割
+    const total = 16 + 16 + 9;
+    const landscape = Math.floor(avail * 16 / total);
+    const portrait  = Math.floor(avail * 9  / total);
+
+    panel.style.setProperty('--thumb-h-3d-landscape', landscape + 'px');
+    panel.style.setProperty('--thumb-h-3d-portrait',  portrait  + 'px');
+  }
+
+  /* VIDEO WORKSのサムネイル高さをJSで動的計算 */
+  function updateVideoThumbHeight() {
+    const panel    = document.getElementById('panel-video');
+    const pic      = panel.querySelector('.pic');
+    const phead    = panel.querySelector('.phead');
+    const sections = panel.querySelectorAll('.video-section');
+    const lbls     = panel.querySelectorAll('.grid-label');
+
+    const picH        = pic.getBoundingClientRect().height;
+    const pheadH      = phead.getBoundingClientRect().height;
+    const wksGapTotal = 8 * (sections.length - 1);
+    const secGapTotal = 2 * sections.length;
+    let labelH = 0;
+    lbls.forEach(l => labelH += l.getBoundingClientRect().height);
+
+    const avail = picH - pheadH - wksGapTotal - secGapTotal - labelH;
+
+    // 縦(9:16)と横(16:9)の自然な高さ比を維持しながら合計をavailに収める
+    // 縦サムネイル幅 = h_v * (9/16)、横サムネイル幅 = h_h * (16/9)
+    // ここでは高さ比 9:16 → 縦:横 = 16:9 の逆数比で分割
+    // 縦section高さ : 横section高さ = 16 : 9 (縦動画は細いので多く高さを使える)
+    const total = 16 + 9;
+    const thumbV = Math.floor(avail * 16 / total);
+    const thumbH = Math.floor(avail * 9  / total);
+
+    panel.style.setProperty('--thumb-h-video-v', thumbV + 'px');
+    panel.style.setProperty('--thumb-h-video-h', thumbH + 'px');
   }
 
   window.addEventListener('resize', () => {
     if (document.getElementById('panel-3d').classList.contains('active')) {
       update3dThumbHeight();
+    }
+    if (document.getElementById('panel-video').classList.contains('active')) {
+      updateVideoThumbHeight();
     }
   });
 
@@ -716,6 +750,7 @@
         document.querySelectorAll('#panel-video .thumb-webm').forEach(v => {
           v.muted = true; v.currentTime = 0; v.play().catch(() => {});
         });
+        updateVideoThumbHeight();
         pvid.removeEventListener('transitionend', playVid);
       };
       pvid.addEventListener('transitionend', playVid);

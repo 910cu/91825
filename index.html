@@ -343,19 +343,19 @@
       height:var(--thumb-h-3d-img, 25vh);
       flex-shrink:0; position:relative; width:auto;
     }
-    #image-grid-horizontal{flex-wrap:nowrap; align-items:flex-start;}
-    /* 横画像(16:9): 幅を6等分 */
+    #image-grid-horizontal{flex-wrap:nowrap; align-items:flex-end;}
+    /* 横画像(16:9): 高さ固定、幅はaspect-ratioから自動 */
     #image-grid-horizontal .thumb:not([data-src="test/houseplants.png"]){
       aspect-ratio:16/9;
-      width:calc((100vw - 144px - 20px) / 6);
+      height:var(--thumb-h-3d-img, 25vh);
+      width:auto;
       flex-shrink:0; position:relative;
     }
-    /* houseplants.png(9:16): 横画像と高さを揃える
-       横画像の高さ = w × (9/16)、w = (100vw - 164px) / 6
-       縦画像の幅 = 高さ × (9/16) = w × (9/16) × (9/16) = w × 81/256 */
+    /* houseplants.png(9:16): 同じ高さに揃える */
     #image-grid-horizontal .thumb[data-src="test/houseplants.png"]{
       aspect-ratio:9/16;
-      width:calc((100vw - 144px - 20px) / 6 * 9 / 16);
+      height:var(--thumb-h-3d-img, 25vh);
+      width:auto;
       flex-shrink:0; position:relative;
     }
 

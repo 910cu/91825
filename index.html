@@ -343,10 +343,14 @@
       height:calc((100vh - 64px - 34px - 20px - 20px - 8px*3 - 2px*4 - 1.4rem*4) * 0.33);
       flex-shrink:0; position:relative; width:auto;
     }
+    #image-grid-horizontal{flex-wrap:wrap;}
     #image-grid-horizontal .thumb{
       aspect-ratio:16/9 !important;
-      height:calc((100vh - 64px - 34px - 20px - 20px - 8px*3 - 2px*4 - 1.4rem*4) * 0.33);
-      flex-shrink:0; position:relative; width:auto;
+      /* 幅を枚数で均等分割してはみ出しを防止 */
+      /* 利用可能幅 = 100vw - pi左右padding(144px) - thumb間gap(4px×4=16px) */
+      width:calc((100vw - 144px - 16px) / 5);
+      height:auto;
+      flex-shrink:0; position:relative;
     }
     #image-grid-vertical .thumb{
       aspect-ratio:9/16 !important;

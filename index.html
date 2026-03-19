@@ -344,14 +344,19 @@
       flex-shrink:0; position:relative; width:auto;
     }
     #image-grid-horizontal{flex-wrap:nowrap;}
-    #image-grid-horizontal .thumb{
+    /* 横画像: 16:9 */
+    #image-grid-horizontal .thumb:not([data-src="test/背景.png"]){
+      aspect-ratio:16/9 !important;
       width:calc((100vw - 144px - 20px) / 6);
-      height:var(--thumb-h-3d-img, 25vh);
+      height:auto;
       flex-shrink:0; position:relative;
     }
-    /* imgは元の比率を維持しつつ枠内に収める */
-    #image-grid-horizontal .thumb img{
-      position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center;
+    /* 背景.pngのみ: 9:16縦 */
+    #image-grid-horizontal .thumb[data-src="test/背景.png"]{
+      aspect-ratio:9/16 !important;
+      width:calc((100vw - 144px - 20px) / 6);
+      height:auto;
+      flex-shrink:0; position:relative;
     }
 
 

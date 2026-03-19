@@ -340,20 +340,22 @@
     /* ── 3D WORKS ── */
     #video-row-3d .thumb{
       aspect-ratio:16/9 !important;
-      width:var(--thumb-w-3d-video, 30vw);
+      width:var(--thumb-w-3d, 30vw);
       height:auto;
       flex-shrink:0; position:relative;
     }
-    #image-grid-horizontal{flex-wrap:nowrap; align-items:flex-end;}
+    /* Image行: 折り返し対応 */
+    #image-grid-horizontal{flex-wrap:wrap; align-items:flex-end; gap:4px;}
     #image-grid-horizontal .thumb:not([data-src="test/houseplants.png"]){
       aspect-ratio:16/9;
-      width:var(--thumb-w-3d-img-h, 20vw);
+      width:var(--thumb-w-3d, 20vw);
       height:auto;
       flex-shrink:0; position:relative;
     }
+    /* houseplants.png: 横画像と同じ高さになる幅 = thumbW * 9/16 * 9/16 */
     #image-grid-horizontal .thumb[data-src="test/houseplants.png"]{
       aspect-ratio:9/16;
-      width:var(--thumb-w-3d-img-v, 10vw);
+      width:var(--thumb-w-3d-v, 10vw);
       height:auto;
       flex-shrink:0; position:relative;
     }
@@ -668,49 +670,40 @@
 
   /* 3D WORKSのサムネイル幅・高さを両方向から計算して全体を収める */
   function update3dImageHeight() {
-    const panel  = document.getElementById('panel-3d');
+    const panel   = document.getElementById('panel-3d');
+    const availW  = window.innerWidth - 144; // pi左右padding 72×2
 
-    // 利用可能幅 = ウィンドウ幅 - pi左右padding(72*2=144px) - thumb間gap
-    const availW = window.innerWidth - 144;
+    // ── Step1: Video行の1枚幅を基準にする（3枚、gap 4px×2=8px）──
+    const thumbW  = Math.floor((availW - 8) / 3);
+    const thumbH  = Math.floor(thumbW * 9 / 16); // 16:9の高さ
 
-    // ── Video行: 16:9 × 3枚、gap 4px×2=8px ──
-    const wV     = Math.floor((availW - 8) / 3);   // 1枚の幅
-    const hV     = Math.floor(wV * 9 / 16);         // 1枚の高さ
+    // ── Step2: 縦方向の制約チェック ──
+    const stageH  = window.innerHeight - 64 - 34;
+    const piH     = stageH - 40;
+    const pheadEl = panel.querySelector('.phead');
+    const pheadH  = panel.classList.contains('active')
+                    ? pheadEl.getBoundingClientRect().height : 66;
+    // Image行が何列になるかを計算して必要な行数を求める
+    // 横5枚 + 縦1枚（幅 = thumbW * 9/16 * 9/16 = thumbW * 81/256）
+    const thumbWv = Math.floor(thumbW * 9 / 16); // 縦画像は高さをそろえるので幅=h*(9/16)=thumbH*(9/16)
+    // 1列に入る横画像数を計算
+    const colsPerRow = Math.floor((availW + 4) / (thumbW + 4));
+    const nHoriz  = 5; // 横画像枚数
+    const imgRows = Math.ceil(nHoriz / colsPerRow); // 横画像の行数（縦画像は横に並ぶ）
+    // imgRows行 + Video1行 = 合計行数
+    const totalRows = 1 + imgRows;
+    const labelsH = 14 * 2; // セクションラベル2つ分
+    const gapsH   = 8 * 1 + 4 * (imgRows - 1); // セクション間gap + image行内の折り返しgap
+    const availH  = piH - pheadH - labelsH - gapsH;
+    const maxH    = Math.floor(availH / totalRows);
 
-    // ── Image行: 16:9 × 5枚 + 9:16 × 1枚、gap 4px×5=20px ──
-    // 縦1枚の幅 = 横1枚の幅 × (9/16)/(16/9) = 横幅 × 81/256
-    // 合計幅 = wH*5 + wH*(81/256) = wH * (5 + 81/256)
-    // availW - 20 = wH * (5 + 81/256)
-    const wH     = Math.floor((availW - 20) / (5 + 81/256));
-    const wHv    = Math.floor(wH * 81 / 256);       // 縦画像の幅
+    // ── Step3: 幅制約と高さ制約の小さい方を採用 ──
+    const finalH  = Math.min(thumbH, maxH);
+    const finalW  = Math.floor(finalH * 16 / 9);      // 横: 16:9
+    const finalWv = Math.floor(finalH * 9  / 16);     // 縦: 9:16（同じ高さ）
 
-    // ── 両行の高さを揃える（小さい方に合わせる） ──
-    // Image行の横画像の高さ = wH * 9/16
-    const hImg   = Math.floor(wH * 9 / 16);
-    const rowH   = Math.min(hV, hImg);              // 両行を同じ高さに
-
-    // rowHから逆算して幅を更新
-    const wVfinal  = Math.floor(rowH * 16 / 9);    // Video行: 16:9
-    const wHfinal  = Math.floor(rowH * 16 / 9);    // Image横: 16:9
-    const wHvfinal = Math.floor(rowH * 9  / 16);   // Image縦: 9:16
-
-    // ── 縦方向にも収まるか確認 ──
-    const stageH   = window.innerHeight - 64 - 34;
-    const piH      = stageH - 40;
-    const pheadEl  = panel.querySelector('.phead');
-    const pheadH   = panel.classList.contains('active')
-                     ? pheadEl.getBoundingClientRect().height : 66;
-    const availH   = piH - pheadH - 8 - 4 - 14*2; // gap + secgap + labels
-    const maxRowH  = Math.floor(availH / 2);        // 2行なので1行の最大高さ
-
-    const finalH   = Math.min(rowH, maxRowH);
-    const fwV      = Math.floor(finalH * 16 / 9);
-    const fwH      = Math.floor(finalH * 16 / 9);
-    const fwHv     = Math.floor(finalH * 9  / 16);
-
-    panel.style.setProperty('--thumb-w-3d-video', fwV  + 'px');
-    panel.style.setProperty('--thumb-w-3d-img-h', fwH  + 'px');
-    panel.style.setProperty('--thumb-w-3d-img-v', fwHv + 'px');
+    panel.style.setProperty('--thumb-w-3d',   finalW  + 'px');
+    panel.style.setProperty('--thumb-w-3d-v', finalWv + 'px');
   }
 
   window.addEventListener('resize', () => {

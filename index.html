@@ -77,8 +77,8 @@
 
     /* ═══ STAGE ═══ */
     #stage{position:fixed;inset:64px 0 34px;z-index:10;}
-    .panel{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .55s ease,visibility .55s ease;display:flex;}
-    .panel.active{opacity:1;visibility:visible;pointer-events:all;}
+    .panel{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .55s ease,visibility 0s ease .55s;display:flex;}
+    .panel.active{opacity:1;visibility:visible;pointer-events:all;transition:opacity .55s ease,visibility 0s ease 0s;}
 
     /* ═══ HOME ═══ */
     #ph{flex-direction:column;justify-content:flex-end;padding:0 72px 64px;}

@@ -323,15 +323,24 @@
     .panel.active .phead{animation:rise .6s cubic-bezier(.16,1,.3,1) both .04s;}
     .panel.active .about-grid,.panel.active .works-layout,.panel.active .contact-grid{animation:rise .7s cubic-bezier(.16,1,.3,1) both .18s;}
 
-    /* ═══ 3D PANEL — 縦並び・画面内に収める ═══ */
-    .works-3d{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;overflow-y:auto;}
+    /* ═══ 3D / VIDEO PANEL — スクロールなし・画面内に収める ═══ */
+    .works-3d{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0;overflow:hidden;}
     .works-3d > .grid-label{flex-shrink:0;}
     #panel-3d .thumb-row, #panel-video .thumb-row{flex-shrink:0;}
-    /* 3D imageは6列1行にして縦幅を最小化 */
+    /* 3D imageは6列1行 */
     #panel-3d #image-grid-3d{grid-template-columns:repeat(6,1fr) !important;}
     /* VIDEO縦動画：4列、横動画：3列 */
     #thumbs-video-vertical{grid-template-columns:repeat(4,1fr) !important;}
     #thumbs-video-horizontal{grid-template-columns:repeat(3,1fr) !important;}
+
+    /* VIDEO WORKS パネル：ヘッダー縮小＋余白を詰める */
+    #panel-video .pi{padding:22px 72px 22px;}
+    #panel-video .phead{padding-bottom:10px;margin-bottom:10px;}
+    #panel-video .p-title{font-size:clamp(1.4rem,2.8vw,2.6rem);}
+    #panel-video .p-num{font-size:2.2rem;}
+    #panel-video .works-3d{gap:6px;}
+    #panel-video .grid-label{font-size:.68rem;}
+    #panel-video .grid-label.horizontal-label{margin-top:10px;}
 
       #ph,.pi{padding:28px 24px 36px;}
       .about-grid,.works-layout,.contact-grid{grid-template-columns:1fr;gap:24px;}
@@ -516,7 +525,7 @@
             </div>
           </div>
           <!-- 横動画列 -->
-          <div class="grid-label" style="margin-top:18px;">Horizontal</div>
+          <div class="grid-label horizontal-label">Horizontal</div>
           <div class="thumb-row" id="thumbs-video-horizontal" style="grid-template-columns:repeat(3,1fr);align-items:start;">
             <div class="thumb" data-type="video" data-mp4="mp4/京都VLOG.mp4" data-title="京都VLOG" style="aspect-ratio:16/9;">
               <video class="thumb-webm" src="mp4/京都VLOG.mp4" muted loop playsinline preload="metadata"

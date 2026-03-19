@@ -646,74 +646,43 @@
     document.getElementById('iframe-video').src = '';
   }
 
-  /* VIDEO WORKSのサムネイル高さ: 実測ベースで計算 */
+  /* VIDEO WORKSのサムネイル高さ計算 */
   function updateVideoThumbHeight() {
-    const panel    = document.getElementById('panel-video');
-    const pic      = panel.querySelector('.pic');
-    const phead    = panel.querySelector('.phead');
-    const wks      = panel.querySelector('.works-3d');
-    const sections = panel.querySelectorAll('.video-section');
-    const lbls     = panel.querySelectorAll('.grid-label');
-
-    const wasHidden = !panel.classList.contains('active');
-    if (wasHidden) {
-      panel.style.cssText += ';position:fixed;visibility:visible;opacity:0;pointer-events:none;';
-    }
-
-    const picH    = pic.getBoundingClientRect().height;
-    const pheadH  = phead.getBoundingClientRect().height;
-    const wksStyle = getComputedStyle(wks);
-    const wksGap  = parseFloat(wksStyle.gap || wksStyle.rowGap || '8') * (sections.length - 1);
-    let labelH = 0;
-    lbls.forEach(l => { labelH += l.getBoundingClientRect().height; });
-    const secGap = 2 * sections.length;
-
-    if (wasHidden) {
-      panel.style.cssText = panel.style.cssText
-        .replace(';position:fixed;visibility:visible;opacity:0;pointer-events:none;', '');
-    }
-
-    const avail = picH - pheadH - wksGap - secGap - labelH;
-    // 縦(9:16)と横(16:9): 高さ比 = 16:9 で分割
-    const total  = 16 + 9;
-    const thumbV = Math.max(20, Math.floor(avail * 16 / total));
-    const thumbH = Math.max(20, Math.floor(avail * 9  / total));
-
+    const panel     = document.getElementById('panel-video');
+    const nSections = 2;
+    const stageH    = window.innerHeight - 64 - 34;
+    const piH       = stageH - 40;
+    const pheadEl   = panel.querySelector('.phead');
+    const pheadH    = panel.classList.contains('active')
+                      ? pheadEl.getBoundingClientRect().height
+                      : 66;
+    const wksGap    = 8 * (nSections - 1);
+    const secGap    = 2 * nSections;
+    const labelH    = 14 * nSections;
+    const avail     = piH - pheadH - wksGap - secGap - labelH;
+    const total     = 16 + 9;
+    const thumbV    = Math.max(20, Math.floor(avail * 16 / total));
+    const thumbH    = Math.max(20, Math.floor(avail * 9  / total));
     panel.style.setProperty('--thumb-h-video-v', thumbV + 'px');
     panel.style.setProperty('--thumb-h-video-h', thumbH + 'px');
   }
 
-  /* 3D WORKSのサムネイル高さ: 実測ベースで計算 */
+  /* 3D WORKSのサムネイル高さ計算 */
   function update3dImageHeight() {
-    const panel    = document.getElementById('panel-3d');
-    const pic      = panel.querySelector('.pic');
-    const phead    = panel.querySelector('.phead');
-    const wks      = panel.querySelector('.works-3d');
-    const sections = panel.querySelectorAll('.video-section');
-    const labels   = panel.querySelectorAll('.grid-label');
-
-    // パネルを一時的に可視化して実測
-    const wasHidden = panel.style.visibility === 'hidden' || !panel.classList.contains('active');
-    if (wasHidden) {
-      panel.style.cssText += ';position:fixed;visibility:visible;opacity:0;pointer-events:none;';
-    }
-
-    const picH    = pic.getBoundingClientRect().height;
-    const pheadH  = phead.getBoundingClientRect().height;
-    const wksStyle = getComputedStyle(wks);
-    const wksGap  = parseFloat(wksStyle.gap || wksStyle.rowGap || '8') * (sections.length - 1);
-    let labelH = 0;
-    labels.forEach(l => { labelH += l.getBoundingClientRect().height; });
-    // 各section内 gap(label→row)
-    const secGap = 2 * sections.length;
-
-    if (wasHidden) {
-      panel.style.cssText = panel.style.cssText
-        .replace(';position:fixed;visibility:visible;opacity:0;pointer-events:none;', '');
-    }
-
-    const avail = picH - pheadH - wksGap - secGap - labelH;
-    const h = Math.max(20, Math.floor(avail / sections.length));
+    const panel     = document.getElementById('panel-3d');
+    const nSections = 2;
+    const stageH    = window.innerHeight - 64 - 34;
+    const piH       = stageH - 40;
+    // pheadをactiveなら実測、それ以外は推定値
+    const pheadEl   = panel.querySelector('.phead');
+    const pheadH    = panel.classList.contains('active')
+                      ? pheadEl.getBoundingClientRect().height
+                      : 66;
+    const wksGap    = 8 * (nSections - 1);
+    const secGap    = 2 * nSections;
+    const labelH    = 14 * nSections;
+    const avail     = piH - pheadH - wksGap - secGap - labelH;
+    const h         = Math.max(20, Math.floor(avail / nSections));
     panel.style.setProperty('--thumb-h-3d-img', h + 'px');
   }
 

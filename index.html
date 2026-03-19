@@ -344,22 +344,19 @@
       flex-shrink:0; position:relative; width:auto;
     }
     #image-grid-horizontal{flex-wrap:nowrap; align-items:flex-start;}
-    /* 全サムネイル共通: 幅を6等分、高さはそれぞれのaspect-ratioに従う */
-    #image-grid-horizontal .thumb{
+    /* 横画像(16:9): 幅を6等分 */
+    #image-grid-horizontal .thumb:not([data-src="test/houseplants.png"]){
+      aspect-ratio:16/9;
       width:calc((100vw - 144px - 20px) / 6);
       flex-shrink:0; position:relative;
     }
-    /* 背景.png以外: 16:9 */
-    #image-grid-horizontal .thumb:not([data-src="test/背景.png"]){
-      aspect-ratio:16/9;
-    }
-    /* 背景.png: ファイル本来の比率のまま (aspect-ratio強制なし、imgの自然なサイズに任せる) */
-    #image-grid-horizontal .thumb[data-src="test/背景.png"]{
-      aspect-ratio:unset;
-    }
-    #image-grid-horizontal .thumb[data-src="test/背景.png"] img{
-      position:relative !important; inset:unset !important;
-      width:100%; height:auto; display:block;
+    /* houseplants.png(9:16): 横画像と高さを揃える
+       横画像の高さ = w × (9/16)、w = (100vw - 164px) / 6
+       縦画像の幅 = 高さ × (9/16) = w × (9/16) × (9/16) = w × 81/256 */
+    #image-grid-horizontal .thumb[data-src="test/houseplants.png"]{
+      aspect-ratio:9/16;
+      width:calc((100vw - 144px - 20px) / 6 * 9 / 16);
+      flex-shrink:0; position:relative;
     }
 
 
@@ -529,8 +526,8 @@
               <div class="thumb is-image" data-type="image" data-src="test/TrafficLIght.png" data-title="TrafficLight">
                 <img src="test/TrafficLIght.png" alt="TrafficLight"/>
               </div>
-              <div class="thumb is-image" data-type="image" data-src="test/背景.png" data-title="背景">
-                <img src="test/背景.png" alt="背景"/>
+              <div class="thumb is-image" data-type="image" data-src="test/houseplants.png" data-title="houseplants">
+                <img src="test/houseplants.png" alt="houseplants"/>
               </div>
             </div>
           </div>

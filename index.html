@@ -345,18 +345,21 @@
     }
     #image-grid-horizontal{flex-wrap:wrap;}
     #image-grid-horizontal .thumb{
+      /* 背景.pngは縦比率で表示 */
+    }
+    #image-grid-horizontal .thumb:not([data-src="test/背景.png"]){
       aspect-ratio:16/9 !important;
-      /* 幅を枚数で均等分割してはみ出しを防止 */
-      /* 利用可能幅 = 100vw - pi左右padding(144px) - thumb間gap(4px×4=16px) */
-      width:calc((100vw - 144px - 16px) / 5);
+    }
+    #image-grid-horizontal .thumb[data-src="test/背景.png"]{
+      aspect-ratio:9/16 !important;
+    }
+    #image-grid-horizontal .thumb{
+      /* 利用可能幅 = 100vw - pi左右padding(144px) - thumb間gap(4px×5=20px) を6枚で分割 */
+      width:calc((100vw - 144px - 20px) / 6);
       height:auto;
       flex-shrink:0; position:relative;
     }
-    #image-grid-vertical .thumb{
-      aspect-ratio:9/16 !important;
-      height:calc((100vh - 64px - 34px - 20px - 20px - 8px*3 - 2px*4 - 1.4rem*4) * 0.33);
-      flex-shrink:0; position:relative; width:auto;
-    }
+
 
     /* ── VIDEO WORKS: JSで動的計算 ── */
     #thumbs-video-vertical .thumb{
@@ -524,12 +527,6 @@
               <div class="thumb is-image" data-type="image" data-src="test/TrafficLIght.png" data-title="TrafficLight">
                 <img src="test/TrafficLIght.png" alt="TrafficLight"/>
               </div>
-            </div>
-          </div>
-          <!-- 縦画像セクション: 9:16 -->
-          <div class="video-section">
-            <div class="grid-label">Image — Vertical</div>
-            <div class="thumb-row" id="image-grid-vertical">
               <div class="thumb is-image" data-type="image" data-src="test/背景.png" data-title="背景">
                 <img src="test/背景.png" alt="背景"/>
               </div>

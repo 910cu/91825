@@ -340,22 +340,21 @@
     /* ── 3D WORKS ── */
     #video-row-3d .thumb{
       aspect-ratio:16/9 !important;
-      height:var(--thumb-h-3d-img, 25vh);
-      flex-shrink:0; position:relative; width:auto;
-    }
-    #image-grid-horizontal{flex-wrap:nowrap; align-items:flex-end;}
-    /* 横画像(16:9): 高さ固定、幅はaspect-ratioから自動 */
-    #image-grid-horizontal .thumb:not([data-src="test/houseplants.png"]){
-      aspect-ratio:16/9;
-      height:var(--thumb-h-3d-img, 25vh);
-      width:auto;
+      width:var(--thumb-w-3d-video, 30vw);
+      height:auto;
       flex-shrink:0; position:relative;
     }
-    /* houseplants.png(9:16): 同じ高さに揃える */
+    #image-grid-horizontal{flex-wrap:nowrap; align-items:flex-end;}
+    #image-grid-horizontal .thumb:not([data-src="test/houseplants.png"]){
+      aspect-ratio:16/9;
+      width:var(--thumb-w-3d-img-h, 20vw);
+      height:auto;
+      flex-shrink:0; position:relative;
+    }
     #image-grid-horizontal .thumb[data-src="test/houseplants.png"]{
       aspect-ratio:9/16;
-      height:var(--thumb-h-3d-img, 25vh);
-      width:auto;
+      width:var(--thumb-w-3d-img-v, 10vw);
+      height:auto;
       flex-shrink:0; position:relative;
     }
 
@@ -667,23 +666,51 @@
     panel.style.setProperty('--thumb-h-video-h', thumbH + 'px');
   }
 
-  /* 3D WORKSのサムネイル高さ計算 */
+  /* 3D WORKSのサムネイル幅・高さを両方向から計算して全体を収める */
   function update3dImageHeight() {
-    const panel     = document.getElementById('panel-3d');
-    const nSections = 2;
-    const stageH    = window.innerHeight - 64 - 34;
-    const piH       = stageH - 40;
-    // pheadをactiveなら実測、それ以外は推定値
-    const pheadEl   = panel.querySelector('.phead');
-    const pheadH    = panel.classList.contains('active')
-                      ? pheadEl.getBoundingClientRect().height
-                      : 66;
-    const wksGap    = 8 * (nSections - 1);
-    const secGap    = 2 * nSections;
-    const labelH    = 14 * nSections;
-    const avail     = piH - pheadH - wksGap - secGap - labelH;
-    const h         = Math.max(20, Math.floor(avail / nSections));
-    panel.style.setProperty('--thumb-h-3d-img', h + 'px');
+    const panel  = document.getElementById('panel-3d');
+
+    // 利用可能幅 = ウィンドウ幅 - pi左右padding(72*2=144px) - thumb間gap
+    const availW = window.innerWidth - 144;
+
+    // ── Video行: 16:9 × 3枚、gap 4px×2=8px ──
+    const wV     = Math.floor((availW - 8) / 3);   // 1枚の幅
+    const hV     = Math.floor(wV * 9 / 16);         // 1枚の高さ
+
+    // ── Image行: 16:9 × 5枚 + 9:16 × 1枚、gap 4px×5=20px ──
+    // 縦1枚の幅 = 横1枚の幅 × (9/16)/(16/9) = 横幅 × 81/256
+    // 合計幅 = wH*5 + wH*(81/256) = wH * (5 + 81/256)
+    // availW - 20 = wH * (5 + 81/256)
+    const wH     = Math.floor((availW - 20) / (5 + 81/256));
+    const wHv    = Math.floor(wH * 81 / 256);       // 縦画像の幅
+
+    // ── 両行の高さを揃える（小さい方に合わせる） ──
+    // Image行の横画像の高さ = wH * 9/16
+    const hImg   = Math.floor(wH * 9 / 16);
+    const rowH   = Math.min(hV, hImg);              // 両行を同じ高さに
+
+    // rowHから逆算して幅を更新
+    const wVfinal  = Math.floor(rowH * 16 / 9);    // Video行: 16:9
+    const wHfinal  = Math.floor(rowH * 16 / 9);    // Image横: 16:9
+    const wHvfinal = Math.floor(rowH * 9  / 16);   // Image縦: 9:16
+
+    // ── 縦方向にも収まるか確認 ──
+    const stageH   = window.innerHeight - 64 - 34;
+    const piH      = stageH - 40;
+    const pheadEl  = panel.querySelector('.phead');
+    const pheadH   = panel.classList.contains('active')
+                     ? pheadEl.getBoundingClientRect().height : 66;
+    const availH   = piH - pheadH - 8 - 4 - 14*2; // gap + secgap + labels
+    const maxRowH  = Math.floor(availH / 2);        // 2行なので1行の最大高さ
+
+    const finalH   = Math.min(rowH, maxRowH);
+    const fwV      = Math.floor(finalH * 16 / 9);
+    const fwH      = Math.floor(finalH * 16 / 9);
+    const fwHv     = Math.floor(finalH * 9  / 16);
+
+    panel.style.setProperty('--thumb-w-3d-video', fwV  + 'px');
+    panel.style.setProperty('--thumb-w-3d-img-h', fwH  + 'px');
+    panel.style.setProperty('--thumb-w-3d-img-v', fwHv + 'px');
   }
 
   window.addEventListener('resize', () => {

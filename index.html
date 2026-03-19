@@ -777,10 +777,11 @@
     const thumbWfromW = Math.floor((availW - 8) / 3);      // 幅から計算
     const thumbHfromW = Math.floor(thumbWfromW * 9 / 16);
 
-    // ── 幅・高さ両方の制約で小さい方を採用 ──
-    const finalH  = Math.min(thumbHfromW, maxRowH);
-    const finalW  = Math.floor(finalH * 16 / 9);   // 動画・横画像共通幅
-    const finalWv = Math.floor(finalH * 9  / 16);  // 縦画像幅
+    // ── 幅はVideo行と完全一致 ──
+    // 3枚がぴったり収まるよう: (availW - gap×2) / 3 を floor
+    // さらに1px引いて折り返しを確実に防ぐ
+    const finalW  = Math.floor((availW - 8) / 3) - 1;
+    const finalWv = Math.floor(Math.min(thumbHfromW, maxRowH) * 9 / 16);
 
     panel.style.setProperty('--thumb-w-3d',   finalW  + 'px');
     panel.style.setProperty('--thumb-w-3d-v', finalWv + 'px');

@@ -761,27 +761,31 @@
     const panel   = document.getElementById('panel-3d');
     const availW  = window.innerWidth - 144; // pi左右padding 72×2
 
-    // ── 縦方向の利用可能高さ ──
+    // ── 縦方向: 利用可能高さを3段均等に分割 ──
     const stageH  = window.innerHeight - 64 - 34;
     const piH     = stageH - 40;
     const pheadEl = panel.querySelector('.phead');
     const pheadH  = panel.classList.contains('active')
                     ? pheadEl.getBoundingClientRect().height : 66;
-    // Video行1行 + Image行2段 = 合計3段、セクション間gap:8px×1、段間gap:4px×1、ラベル×2
-    const labelsH  = 14 * 2;
-    const gapsH    = 8 + 4; // セクション間1 + Image行内折り返し1
-    const availH   = piH - pheadH - labelsH - gapsH;
-    const maxRowH  = Math.floor(availH / 3); // 3段均等
+    // Video1段 + Image2段 = 3段
+    // セクション間gap:8px×1、Image行内折り返しgap:4px×1、ラベル:14px×2
+    const labelsH = 14 * 2;
+    const gapsH   = 8 + 4;
+    const availH  = piH - pheadH - labelsH - gapsH;
+    const maxRowH = Math.floor(availH / 3);
 
-    // ── Video行: 3枚16:9、幅基準 ──
-    const thumbWfromW = Math.floor((availW - 8) / 3);      // 幅から計算
-    const thumbHfromW = Math.floor(thumbWfromW * 9 / 16);
+    // ── 幅方向: 3枚が収まる1枚の最大幅 ──
+    const maxRowW = Math.floor((availW - 8) / 3) - 1;
 
-    // ── 幅はVideo行と完全一致 ──
-    // 3枚がぴったり収まるよう: (availW - gap×2) / 3 を floor
-    // さらに1px引いて折り返しを確実に防ぐ
-    const finalW  = Math.floor((availW - 8) / 3) - 1;
-    const finalWv = Math.floor(Math.min(thumbHfromW, maxRowH) * 9 / 16);
+    // ── 両制約から1枚の高さを決定 ──
+    // 幅から高さ: maxRowW * 9/16
+    // 高さ制約:   maxRowH
+    // → 小さい方を採用
+    const finalH  = Math.min(Math.floor(maxRowW * 9 / 16), maxRowH);
+
+    // ── 高さから幅を逆算（動画・横画像共通） ──
+    const finalW  = Math.floor(finalH * 16 / 9);
+    const finalWv = Math.floor(finalH * 9  / 16); // 縦画像(9:16)の幅
 
     panel.style.setProperty('--thumb-w-3d',   finalW  + 'px');
     panel.style.setProperty('--thumb-w-3d-v', finalWv + 'px');
